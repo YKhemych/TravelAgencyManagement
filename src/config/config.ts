@@ -11,7 +11,7 @@ const params = {
   DB_URL: process.env.DB_URL,
   DB_TEST_URL: process.env.DB_TEST_URL,
 
-  DEFAULT_LIMIT: process.env.DEFAULT_LIMIT,
+  DEFAULT_LIMIT: process.env.DEFAULT_LIMIT
 };
 
 export const config = new Config(params);
