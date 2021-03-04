@@ -1,0 +1,11 @@
+const path = require('path');
+const {
+  config
+} = require('./dist/config/config')
+
+
+module.exports = {
+  'migrations-path': path.resolve('./', './dist/migrations'),
+  'models-path': path.resolve('./', './dist/models'),
+  'url': config.DB_URL
+};
