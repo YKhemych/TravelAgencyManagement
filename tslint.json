@@ -16,7 +16,6 @@
     "object-literal-sort-keys": false,
     "object-literal-key-quotes": [true, "as-needed"],
     "trailing-comma": false,
-    "noUnusedLocals": true,
     "prefer-object-spread": true,
     "prefer-template": true,
     "no-default-export": true,
