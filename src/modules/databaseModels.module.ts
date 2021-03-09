@@ -1,8 +1,13 @@
 import { Module } from '@nestjs/common';
-import { BlackmailedTokenProvider, UserProvider } from '../providers/models.providers';
+import {
+  BlackmailedTokenProvider,
+  UserProvider,
+  AddressProvider,
+  LocationProvider
+} from '../providers/models.providers';
 
 @Module({
-  providers: [BlackmailedTokenProvider, UserProvider],
-  exports: [BlackmailedTokenProvider, UserProvider]
+  providers: [BlackmailedTokenProvider, UserProvider, AddressProvider, LocationProvider],
+  exports: [BlackmailedTokenProvider, UserProvider, AddressProvider, LocationProvider]
 })
 export class DatabaseModelsModule {}
