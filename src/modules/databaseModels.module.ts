@@ -3,11 +3,30 @@ import {
   BlackmailedTokenProvider,
   UserProvider,
   AddressProvider,
-  LocationProvider
+  LocationProvider,
+  CompanyProvider,
+  HotelProvider,
+  HotelImageProvider
 } from '../providers/models.providers';
 
 @Module({
-  providers: [BlackmailedTokenProvider, UserProvider, AddressProvider, LocationProvider],
-  exports: [BlackmailedTokenProvider, UserProvider, AddressProvider, LocationProvider]
+  providers: [
+    BlackmailedTokenProvider,
+    UserProvider,
+    AddressProvider,
+    LocationProvider,
+    CompanyProvider,
+    HotelProvider,
+    HotelImageProvider
+  ],
+  exports: [
+    BlackmailedTokenProvider,
+    UserProvider,
+    AddressProvider,
+    LocationProvider,
+    CompanyProvider,
+    HotelProvider,
+    HotelImageProvider
+  ]
 })
 export class DatabaseModelsModule {}

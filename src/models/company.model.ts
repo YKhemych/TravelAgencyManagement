@@ -3,11 +3,13 @@ import {
   Column,
   CreatedAt,
   ForeignKey,
+  HasMany,
   Model,
   Table,
   UpdatedAt
 } from 'sequelize-typescript';
 import { Address } from './address.model';
+import { Hotel } from './hotel.model';
 
 @Table
 export class Company extends Model<Company> {
@@ -28,6 +30,9 @@ export class Company extends Model<Company> {
   addressId: number;
 
   @BelongsTo(() => Address, { onDelete: 'SET NULL' }) address: Address;
+
+  @HasMany(() => Hotel)
+  hotels: Hotel[];
 
   @CreatedAt
   createdAt: Date;
