@@ -1,5 +1,6 @@
 import {
   BelongsTo,
+  BelongsToMany,
   Column,
   CreatedAt,
   DataType,
@@ -9,6 +10,8 @@ import {
   UpdatedAt
 } from 'sequelize-typescript';
 import { Hotel } from './hotel.model';
+import { Service } from './service.model';
+import { RoomService } from './roomService.model';
 
 export enum RoomTypeEnum {
   SUPER_LUX = 'super_lux',
@@ -49,7 +52,8 @@ export class Room extends Model<Room> {
   @Column({ allowNull: false })
   pricePerDay: number;
 
-  // todo add services
+  @BelongsToMany(() => Service, () => RoomService)
+  defaultServices: Service[];
 
   @ForeignKey(() => Hotel)
   @Column({ allowNull: false })
