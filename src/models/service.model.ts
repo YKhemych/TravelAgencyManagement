@@ -29,7 +29,7 @@ export class Service extends Model<Service> {
   description: string;
 
   @ForeignKey(() => ServiceCategory)
-  @Column({ allowNull: false })
+  @Column
   categoryId: number;
 
   @BelongsTo(() => ServiceCategory, { onDelete: 'SET NULL' }) category: ServiceCategory;
