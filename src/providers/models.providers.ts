@@ -5,6 +5,11 @@ import { Location } from '../models/location.model';
 import { Company } from '../models/company.model';
 import { HotelImage } from '../models/hotelImage.model';
 import { Hotel } from '../models/hotel.model';
+import { HotelService } from "../models/hotelService.model";
+import { Room } from "../models/room.model";
+import { RoomService } from "../models/roomService.model";
+import { Service } from "../models/service.model";
+import { ServiceCategory } from "../models/serviceCategory.model";
 
 export const BlackmailedTokenProvider = {
   provide: 'BlackmailedTokenModel',
@@ -39,4 +44,29 @@ export const HotelProvider = {
 export const HotelImageProvider = {
   provide: 'HotelImageModel',
   useValue: HotelImage
+};
+
+export const HotelServiceProvider = {
+  provide: 'HotelServiceModel',
+  useValue: HotelService
+};
+
+export const RoomProvider = {
+  provide: 'RoomModel',
+  useValue: Room
+};
+
+export const RoomServiceProvider = {
+  provide: 'RoomServiceModel',
+  useValue: RoomService
+};
+
+export const ServiceCategoryProvider = {
+  provide: 'ServiceCategoryModel',
+  useValue: ServiceCategory
+};
+
+export const ServiceProvider = {
+  provide: 'ServiceModel',
+  useValue: Service
 };
