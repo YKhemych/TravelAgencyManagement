@@ -11,6 +11,7 @@ import {
 import { Address } from './address.model';
 import { HotelImage } from './hotelImage.model';
 import { Company } from './company.model';
+import { Room } from './room.model';
 
 @Table
 export class Hotel extends Model<Hotel> {
@@ -43,6 +44,9 @@ export class Hotel extends Model<Hotel> {
   companyId: number;
 
   @BelongsTo(() => Company, { onDelete: 'SET NULL' }) company: Company;
+
+  @HasMany(() => Room)
+  rooms: Room[];
 
   @CreatedAt
   createdAt: Date;
