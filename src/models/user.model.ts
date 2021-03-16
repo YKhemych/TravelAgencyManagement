@@ -42,6 +42,9 @@ export class User extends Model<User> {
   @Column
   surname: string;
 
+  @Column
+  phone: string;
+
   @ForeignKey(() => Company)
   @Column
   companyId: number;
