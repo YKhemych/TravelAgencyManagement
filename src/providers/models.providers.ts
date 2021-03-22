@@ -5,11 +5,14 @@ import { Location } from '../models/location.model';
 import { Company } from '../models/company.model';
 import { HotelImage } from '../models/hotelImage.model';
 import { Hotel } from '../models/hotel.model';
-import { HotelService } from "../models/hotelService.model";
-import { Room } from "../models/room.model";
-import { RoomService } from "../models/roomService.model";
-import { Service } from "../models/service.model";
-import { ServiceCategory } from "../models/serviceCategory.model";
+import { HotelService } from '../models/hotelService.model';
+import { Room } from '../models/room.model';
+import { RoomService } from '../models/roomService.model';
+import { Service } from '../models/service.model';
+import { ServiceCategory } from '../models/serviceCategory.model';
+import { Order } from '../models/order.model';
+import { OrderRoom } from '../models/orderRoom.model';
+import { OrderRoomService } from '../models/orderRoomService.model';
 
 export const BlackmailedTokenProvider = {
   provide: 'BlackmailedTokenModel',
@@ -69,4 +72,19 @@ export const ServiceCategoryProvider = {
 export const ServiceProvider = {
   provide: 'ServiceModel',
   useValue: Service
+};
+
+export const OrderProvider = {
+  provide: 'OrderModel',
+  useValue: Order
+};
+
+export const OrderRoomProvider = {
+  provide: 'OrderRoomModel',
+  useValue: OrderRoom
+};
+
+export const OrderRoomServiceProvider = {
+  provide: 'OrderRoomServiceModel',
+  useValue: OrderRoomService
 };

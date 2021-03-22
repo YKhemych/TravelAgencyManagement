@@ -11,7 +11,10 @@ import {
   RoomProvider,
   RoomServiceProvider,
   ServiceProvider,
-  ServiceCategoryProvider
+  ServiceCategoryProvider,
+  OrderProvider,
+  OrderRoomProvider,
+  OrderRoomServiceProvider
 } from '../providers/models.providers';
 
 @Module({
@@ -27,7 +30,10 @@ import {
     RoomProvider,
     RoomServiceProvider,
     ServiceCategoryProvider,
-    ServiceProvider
+    ServiceProvider,
+    OrderProvider,
+    OrderRoomProvider,
+    OrderRoomServiceProvider
   ],
   exports: [
     BlackmailedTokenProvider,
@@ -41,7 +47,10 @@ import {
     RoomProvider,
     RoomServiceProvider,
     ServiceCategoryProvider,
-    ServiceProvider
+    ServiceProvider,
+    OrderProvider,
+    OrderRoomProvider,
+    OrderRoomServiceProvider
   ]
 })
 export class DatabaseModelsModule {}
