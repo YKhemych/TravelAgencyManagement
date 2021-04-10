@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserId, UserInfo } from '../config/user.decorator';
 import { UserResponse } from '../dto/user.dto';
 import { AuthenticateGuard } from '../guards/auth.guard';
@@ -9,8 +9,9 @@ import { supportMessages } from '../enums/supportMessages.enum';
 import { StatusWithMessageDataDto } from '../dto/app.dto';
 
 @ApiBearerAuth()
-@Controller('user')
 @UseGuards(AuthenticateGuard)
+@ApiTags('User')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
