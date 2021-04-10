@@ -10,10 +10,6 @@ import {
 import { Roles, User } from '../models/user.model';
 import { Transform, Type } from 'class-transformer';
 
-export interface RequestWithUserInfo extends Request {
-  user: User;
-}
-
 export class CreateUserDto {
   @ApiPropertyOptional({ example: 'User name' })
   @IsOptional()
