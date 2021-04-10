@@ -1,5 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, MinLength, ValidateNested} from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsPhoneNumber,
+  MinLength,
+  ValidateNested
+} from 'class-validator';
 import { Roles, User } from '../models/user.model';
 import { Transform, Type } from 'class-transformer';
 
