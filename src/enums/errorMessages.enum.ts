@@ -21,6 +21,9 @@ export enum errorMessages {
   'FIELD_SHOULD_NOT_BE_NULL' = 'Field {fieldName} should not be null or undefined',
 
   'INSTANCE_DOES_NOT_EXIST' = '{modelName} does not exist',
+  'INSTANCE_ALREADY_EXIST' = '{modelName} already exist',
+
+  'MODEL_WITH_FIELD_ALREADY_EXIST' = '{modelName} with {fieldName} already exist',
 
   'FIELD_IS_WRONG' = "Field '{fieldName}' is wrong"
 }
