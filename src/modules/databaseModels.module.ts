@@ -7,14 +7,9 @@ import {
   CompanyProvider,
   HotelProvider,
   HotelImageProvider,
-  HotelServiceProvider,
   RoomProvider,
-  RoomServiceProvider,
-  ServiceProvider,
-  ServiceCategoryProvider,
   OrderProvider,
-  OrderRoomProvider,
-  OrderRoomServiceProvider
+  OrderRoomProvider
 } from '../providers/models.providers';
 
 @Module({
@@ -26,14 +21,9 @@ import {
     CompanyProvider,
     HotelProvider,
     HotelImageProvider,
-    HotelServiceProvider,
     RoomProvider,
-    RoomServiceProvider,
-    ServiceCategoryProvider,
-    ServiceProvider,
     OrderProvider,
-    OrderRoomProvider,
-    OrderRoomServiceProvider
+    OrderRoomProvider
   ],
   exports: [
     BlackmailedTokenProvider,
@@ -43,14 +33,9 @@ import {
     CompanyProvider,
     HotelProvider,
     HotelImageProvider,
-    HotelServiceProvider,
     RoomProvider,
-    RoomServiceProvider,
-    ServiceCategoryProvider,
-    ServiceProvider,
     OrderProvider,
-    OrderRoomProvider,
-    OrderRoomServiceProvider
+    OrderRoomProvider
   ]
 })
 export class DatabaseModelsModule {}

@@ -10,8 +10,6 @@ import {
 } from 'sequelize-typescript';
 import { Room } from './room.model';
 import { Order } from './order.model';
-import { Service } from './service.model';
-import { OrderRoomService } from './orderRoomService.model';
 
 @Table
 export class OrderRoom extends Model<OrderRoom> {
@@ -27,9 +25,6 @@ export class OrderRoom extends Model<OrderRoom> {
   roomId: number;
 
   @BelongsTo(() => Room, { onDelete: 'CASCADE' }) room: Room;
-
-  @BelongsToMany(() => Service, () => OrderRoomService)
-  services: Service[];
 
   @CreatedAt
   createdAt: Date;
