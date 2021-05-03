@@ -9,7 +9,8 @@ import {
   HotelImageProvider,
   RoomProvider,
   OrderProvider,
-  OrderRoomProvider
+  OrderRoomProvider,
+  HotelResponseProvider
 } from '../providers/models.providers';
 
 @Module({
@@ -23,7 +24,8 @@ import {
     HotelImageProvider,
     RoomProvider,
     OrderProvider,
-    OrderRoomProvider
+    OrderRoomProvider,
+    HotelResponseProvider
   ],
   exports: [
     BlackmailedTokenProvider,
@@ -35,7 +37,8 @@ import {
     HotelImageProvider,
     RoomProvider,
     OrderProvider,
-    OrderRoomProvider
+    OrderRoomProvider,
+    HotelResponseProvider
   ]
 })
 export class DatabaseModelsModule {}

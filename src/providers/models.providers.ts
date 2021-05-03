@@ -8,6 +8,7 @@ import { Hotel } from '../models/hotel.model';
 import { Room } from '../models/room.model';
 import { Order } from '../models/order.model';
 import { OrderRoom } from '../models/orderRoom.model';
+import { HotelResponse } from "../models/hotelResponse.model";
 
 export const BlackmailedTokenProvider = {
   provide: 'BlackmailedTokenModel',
@@ -57,4 +58,9 @@ export const OrderProvider = {
 export const OrderRoomProvider = {
   provide: 'OrderRoomModel',
   useValue: OrderRoom
+};
+
+export const HotelResponseProvider = {
+  provide: 'HotelResponseModel',
+  useValue: HotelResponse
 };
