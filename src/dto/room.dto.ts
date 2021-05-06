@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { RoomTypeEnum } from "../models/room.model";
+const roomTypes = Object.values(RoomTypeEnum)
+    .filter(value => typeof value === 'string')
+    .reduce((current: string = '', next: RoomTypeEnum) => `${current} | ${next}`, '');
 
 export class RoomDto {
     id: number;
@@ -14,7 +17,7 @@ export class RoomDto {
     @IsString()
     description: string;
 
-    @ApiProperty({ example: 'super_lux' })
+    @ApiProperty({ example: roomTypes })
     @IsString()
     roomType: RoomTypeEnum;
 
@@ -25,6 +28,10 @@ export class RoomDto {
     @ApiProperty({ example: 50 })
     @IsNumber()
     pricePerDay: number;
+
+    @ApiProperty({ example: 5 })
+    @IsNumber()
+    hotelId: number;
 }
 
 export class RoomDataDto {
