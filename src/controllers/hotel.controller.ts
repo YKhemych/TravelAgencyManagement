@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nest
 import { UserId } from '../config/user.decorator';
 import { AuthenticateGuard } from '../guards/auth.guard';
 import { Body } from '@nestjs/common';
-import { InstanceDoesNotExist } from '../classes/errors.class';
+import {InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError} from '../classes/errors.class';
 import { errorMessages } from '../enums/errorMessages.enum';
 import { HotelService } from "../services/hotel.service";
 import { HotelArrayDataDto, HotelDataDto } from "../dto/hotel.dto";
@@ -62,9 +62,18 @@ export class HotelController {
     description: 'Get hotels'
   })
   async getUser(@UserId() userId: number): Promise<HotelArrayDataDto> {
-    const company = await this.hotelService.getHotelsForUser(userId);
+    try {
+      const company = await this.hotelService.getHotelsForUser(userId);
 
-    return { data: company };
+      return { data: company };
+    } catch (err) {
+      switch (err.constructor) {
+        case InstanceDoesNotExist:
+          throw new BadRequestException(errorMessages.INSTANCE_DOES_NOT_EXIST);
+        default:
+          throw err;
+      }
+    }
   }
 
   @Get('/:hotelId')
@@ -73,8 +82,17 @@ export class HotelController {
     description: 'Get hotel by id'
   })
   async getHotel(@Param('hotelId') hotelId: number): Promise<HotelDataDto> {
-    const company = await this.hotelService.getHotel(hotelId);
+    try {
+      const company = await this.hotelService.getHotel(hotelId);
 
-    return { data: company };
+      return {data: company};
+    } catch (err) {
+      switch (err.constructor) {
+        case InstanceDoesNotExist:
+          throw new BadRequestException(errorMessages.INSTANCE_DOES_NOT_EXIST);
+        default:
+          throw err;
+      }
+    }
   }
 }
