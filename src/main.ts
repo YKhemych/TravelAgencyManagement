@@ -24,7 +24,7 @@ async function bootstrap() {
     .setDescription('Travel agency backend API documentation')
     .setVersion('1.0.0')
     .setBasePath('/')
-    .addBearerAuth({ type: 'apiKey', scheme: 'http' }, 'Authorization')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

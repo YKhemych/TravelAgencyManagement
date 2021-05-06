@@ -61,6 +61,18 @@ export class InstanceDoesNotExist extends BadRequestException {
   }
 }
 
+export class InstanceAlreadyExist extends BadRequestException {
+  constructor(modelName: any) {
+    super(modelName);
+  }
+}
+
+export class ModelWithFieldAlreadyExist extends BadRequestException {
+  constructor(modelName: any, fieldName: any) {
+    super(modelName, fieldName);
+  }
+}
+
 export class FieldIsWrong extends BadRequestException {
   constructor(fieldName: any) {
     super(fieldName);

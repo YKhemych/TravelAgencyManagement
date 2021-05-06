@@ -1,11 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, MinLength, ValidateNested } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsPhoneNumber,
+  MinLength,
+  ValidateNested
+} from 'class-validator';
 import { Roles, User } from '../models/user.model';
 import { Transform, Type } from 'class-transformer';
-
-export interface RequestWithUserInfo extends Request {
-  user: User;
-}
 
 export class CreateUserDto {
   @ApiPropertyOptional({ example: 'User name' })
@@ -46,6 +49,10 @@ export class UserResponse {
 
   @ApiProperty({ example: 'User surname' })
   surname: string;
+
+  @ApiPropertyOptional({ example: '380977913642' })
+  @IsPhoneNumber()
+  phone?: string;
 
   @ApiProperty({ example: 'user@gmail.com' })
   email: string;

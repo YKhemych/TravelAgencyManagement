@@ -1,16 +1,19 @@
 import * as bcrypt from 'bcryptjs';
 import {
   BeforeCreate,
+  BelongsTo,
   Column,
   CreatedAt,
   DataType,
   Default,
+  ForeignKey,
   Model,
   Table,
   UpdatedAt
 } from 'sequelize-typescript';
 import { FindOptions } from 'sequelize';
 import { omit } from 'lodash';
+import { Company } from './company.model';
 
 export enum Roles {
   USER = 'user',
@@ -38,6 +41,15 @@ export class User extends Model<User> {
 
   @Column
   surname: string;
+
+  @Column
+  phone: string;
+
+  @ForeignKey(() => Company)
+  @Column
+  companyId: number;
+
+  @BelongsTo(() => Company, { onDelete: 'SET NULL' }) company: Company;
 
   @CreatedAt
   createdAt: Date;

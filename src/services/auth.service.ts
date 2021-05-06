@@ -37,9 +37,8 @@ export class AuthService {
     @Inject('UserModel') private readonly userModel: typeof User,
     @Inject('BlackmailedTokenModel')
     private readonly blackmailedTokenModel: typeof BlackmailedToken,
-    @Inject('SEQUELIZE') private readonly sequelize: Sequelize
-  ) // private readonly mailSenderService: MailSenderService
-  {}
+    @Inject('SEQUELIZE') private readonly sequelize: Sequelize // private readonly mailSenderService: MailSenderService
+  ) {}
 
   async validateAndGetUser(
     tokenHeader: string,
