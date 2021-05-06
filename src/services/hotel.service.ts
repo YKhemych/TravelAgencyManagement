@@ -48,7 +48,7 @@ export class HotelService {
           include: [Location]
         }
       ],
-      order: ['rating', 'DESC'],
+      order: [['rating', 'DESC']],
       limit: Number(limit),
       offset: Number(offset)
     } as FindOptions);
@@ -69,6 +69,8 @@ export class HotelService {
 
       // create address
       const address = await this.addressService.createAddress(hotelDto.address, transaction);
+
+      // todo add checking hotel name and phone
 
       const hotel = await this.hotelModel.create(
         {
