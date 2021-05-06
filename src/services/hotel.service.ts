@@ -8,6 +8,8 @@ import { Address } from "../models/address.model";
 import { Location } from "../models/location.model";
 import { Hotel } from "../models/hotel.model";
 import { HotelDto } from "../dto/hotel.dto";
+import { Room } from "../models/room.model";
+import { HotelImage } from "../models/hotelImage.model";
 
 @Injectable()
 export class HotelService {
@@ -54,6 +56,29 @@ export class HotelService {
     } as FindOptions);
 
     return hotels;
+  }
+
+  async getHotel(id: number): Promise<HotelDto> {
+    const hotel = await this.hotelModel.findByPk(
+        id,
+        {
+          include: [
+            {
+              model: Address,
+              include: [Location]
+            },
+            Room,
+            HotelImage
+          ]
+        } as FindOptions
+    );
+
+    // check company existing
+    if (!hotel) {
+      throw new InstanceDoesNotExist('Hotel');
+    }
+
+    return hotel;
   }
 
   async createHotel(hotelDto: HotelDto, userId: number): Promise<HotelDto> {

@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {BadRequestException, Controller, Get, Param, Post, Query, UseGuards} from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserId } from '../config/user.decorator';
 import { AuthenticateGuard } from '../guards/auth.guard';
@@ -63,6 +63,17 @@ export class HotelController {
   })
   async getUser(@UserId() userId: number): Promise<HotelArrayDataDto> {
     const company = await this.hotelService.getHotelsForUser(userId);
+
+    return { data: company };
+  }
+
+  @Get('/:hotelId')
+  @ApiOkResponse({
+    type: HotelDataDto,
+    description: 'Get hotel by id'
+  })
+  async getHotel(@Param('hotelId') hotelId: number): Promise<HotelDataDto> {
+    const company = await this.hotelService.getHotel(hotelId);
 
     return { data: company };
   }
