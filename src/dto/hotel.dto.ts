@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsPhoneNumber, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AddressDto } from './address.dto';
+import { RoomDto } from "./room.dto";
 
 export class HotelDto {
     id: number;
@@ -27,6 +28,12 @@ export class HotelDto {
     @Type(() => AddressDto)
     @ValidateNested()
     address: AddressDto;
+
+    @ApiProperty({ type: [RoomDto] })
+    @Type(() => RoomDto)
+    @ValidateNested({each: true})
+    @IsOptional()
+    rooms?: RoomDto[];
 
     companyId: number;
 }

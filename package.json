@@ -8,8 +8,8 @@
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "./node_modules/.bin/nodemon --config ./nodemon.json -e ts --project tsconfig.json ./src/main.ts",
-    "start:dev": "./node_modules/.bin/nodemon --config ./nodemon.json -e ts --project tsconfig.json ./src/main.ts --watch",
+    "start": "./node_modules/.bin/nodemon --config ./nodemon.json --project tsconfig.json ./src/main.ts",
+    "start:dev": "./node_modules/.bin/nodemon --config ./nodemon.json --project tsconfig.json ./src/main.ts --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "tslint -p tsconfig.json -c tslint.json",
