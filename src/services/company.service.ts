@@ -1,12 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {FindOptions, Sequelize} from 'sequelize';
+import { FindOptions, Sequelize } from 'sequelize';
 import { User } from '../models/user.model';
-import {InstanceAlreadyExist, InstanceDoesNotExist, ModelWithFieldAlreadyExist} from '../classes/errors.class';
+import {
+  InstanceAlreadyExist,
+  InstanceDoesNotExist,
+  ModelWithFieldAlreadyExist
+} from '../classes/errors.class';
 import { AddressService } from './address.service';
 import { CompanyDto } from '../dto/company.dto';
 import { Company } from '../models/company.model';
-import {Address} from "../models/address.model";
-import {Location} from "../models/location.model";
+import { Address } from '../models/address.model';
+import { Location } from '../models/location.model';
 
 @Injectable()
 export class CompanyService {
@@ -19,22 +23,19 @@ export class CompanyService {
 
   async getCompany(userId: number): Promise<CompanyDto> {
     // get user with company
-    const user = await this.userModel.findByPk(
-      userId,
-      {
-        include: [
-          {
-            model: Company,
-            include: [
-              {
-                model: Address,
-                include: [Location]
-              }
-            ]
-          }
-        ]
-      } as FindOptions
-    );
+    const user = await this.userModel.findByPk(userId, {
+      include: [
+        {
+          model: Company,
+          include: [
+            {
+              model: Address,
+              include: [Location]
+            }
+          ]
+        }
+      ]
+    } as FindOptions);
 
     // check company existing
     if (!user!.companyId) {
