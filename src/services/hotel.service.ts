@@ -10,8 +10,8 @@ import { Hotel } from '../models/hotel.model';
 import { HotelDto, HotelImageDto } from '../dto/hotel.dto';
 import { Room } from '../models/room.model';
 import { HotelImage } from '../models/hotelImage.model';
-import * as fs from "fs";
-import {join} from "path";
+import * as fs from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class HotelService {

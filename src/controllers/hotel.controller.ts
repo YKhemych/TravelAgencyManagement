@@ -1,6 +1,7 @@
 import {
   BadRequestException,
-  Controller, Delete,
+  Controller,
+  Delete,
   ForbiddenException,
   Get,
   Param,
@@ -31,7 +32,7 @@ import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-fi
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as uuid from 'uuid';
-import {StatusDataDto} from "../dto/app.dto";
+import { StatusDataDto } from '../dto/app.dto';
 
 @ApiBearerAuth()
 @UseGuards(AuthenticateGuard)
@@ -149,7 +150,6 @@ export class HotelController {
       const hotelImages = await this.hotelService.createHotelImages(images, hotelId, userId);
 
       return { data: hotelImages };
-
     } catch (err) {
       switch (err.constructor) {
         case InstanceDoesNotExist:

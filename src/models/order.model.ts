@@ -12,7 +12,7 @@ import {
 import { Hotel } from './hotel.model';
 import { User } from './user.model';
 import { OrderRoom } from './orderRoom.model';
-import { Room } from "./room.model";
+import { Room } from './room.model';
 
 @Table
 export class Order extends Model<Order> {
