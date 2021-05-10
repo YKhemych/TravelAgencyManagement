@@ -1,14 +1,37 @@
-import {BadRequestException, Controller, Get, Param, Post, Query, UseGuards} from '@nestjs/common';
-import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  BadRequestException,
+  Controller, Delete,
+  ForbiddenException,
+  Get,
+  Param,
+  Post,
+  Query,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger';
 import { UserId } from '../config/user.decorator';
 import { AuthenticateGuard } from '../guards/auth.guard';
 import { Body } from '@nestjs/common';
-import {InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError} from '../classes/errors.class';
+import { InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError } from '../classes/errors.class';
 import { errorMessages } from '../enums/errorMessages.enum';
-import { HotelService } from "../services/hotel.service";
-import { HotelArrayDataDto, HotelDataDto } from "../dto/hotel.dto";
-import { ApiImplicitQuery } from "@nestjs/swagger/dist/decorators/api-implicit-query.decorator";
-import { config } from "../config/config";
+import { HotelService } from '../services/hotel.service';
+import { HotelArrayDataDto, HotelDataDto, HotelImageArrayDataDto } from '../dto/hotel.dto';
+import { ApiImplicitQuery } from '@nestjs/swagger/dist/decorators/api-implicit-query.decorator';
+import { config } from '../config/config';
+import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-file.decorator';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import * as uuid from 'uuid';
+import {StatusDataDto} from "../dto/app.dto";
 
 @ApiBearerAuth()
 @UseGuards(AuthenticateGuard)
@@ -85,11 +108,73 @@ export class HotelController {
     try {
       const company = await this.hotelService.getHotel(hotelId);
 
-      return {data: company};
+      return { data: company };
     } catch (err) {
       switch (err.constructor) {
         case InstanceDoesNotExist:
           throw new BadRequestException(errorMessages.INSTANCE_DOES_NOT_EXIST);
+        default:
+          throw err;
+      }
+    }
+  }
+
+  @Post('image/:hotelId')
+  @ApiImplicitFile({ name: 'images', required: true })
+  @ApiConsumes('multipart/form-data')
+  @ApiResponse({ status: 201, description: 'Images uploaded success' })
+  @UseInterceptors(
+    FilesInterceptor('images', 10, {
+      storage: diskStorage({
+        destination: './images',
+        filename: (req, file, callback) => {
+          const filename = `${uuid.v4()}_${file.originalname.replace(/ +?/g, '_')}`;
+          callback(null, `${filename}`);
+        }
+      }),
+      fileFilter: (req, file, callback) => {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+          return callback(new ForbiddenException('Only image files are allowed!'), false);
+        }
+        callback(null, true);
+      }
+    })
+  )
+  async uploadMultipleImages(
+    @UploadedFiles() images: Array<Express.Multer.File>,
+    @Param('hotelId') hotelId: number,
+    @UserId() userId: number
+  ): Promise<HotelImageArrayDataDto> {
+    try {
+      const hotelImages = await this.hotelService.createHotelImages(images, hotelId, userId);
+
+      return { data: hotelImages };
+
+    } catch (err) {
+      switch (err.constructor) {
+        case InstanceDoesNotExist:
+          throw new BadRequestException(errorMessages.INSTANCE_DOES_NOT_EXIST);
+        case YouDoNotHaveAccessToInstanceError:
+          throw new BadRequestException(errorMessages.YOU_DO_NOT_HAVE_ACCESS_TO_INSTANCE);
+        default:
+          throw err;
+      }
+    }
+  }
+
+  @Delete('image/:id')
+  @ApiResponse({ status: 200, description: 'Successfully removed' })
+  async deleteImage(@Param('id') id: number, @UserId() userId: number): Promise<StatusDataDto> {
+    try {
+      await this.hotelService.deleteHotelImage(id, userId);
+
+      return { data: { status: 'deleted' } };
+    } catch (err) {
+      switch (err.constructor) {
+        case InstanceDoesNotExist:
+          throw new BadRequestException(errorMessages.INSTANCE_DOES_NOT_EXIST);
+        case YouDoNotHaveAccessToInstanceError:
+          throw new BadRequestException(errorMessages.YOU_DO_NOT_HAVE_ACCESS_TO_INSTANCE);
         default:
           throw err;
       }

@@ -1,21 +1,24 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FindOptions, Sequelize } from 'sequelize';
 import { User } from '../models/user.model';
-import { InstanceDoesNotExist } from '../classes/errors.class';
+import { InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError } from '../classes/errors.class';
 import { AddressService } from './address.service';
 import { Company } from '../models/company.model';
-import { Address } from "../models/address.model";
-import { Location } from "../models/location.model";
-import { Hotel } from "../models/hotel.model";
-import { HotelDto } from "../dto/hotel.dto";
-import { Room } from "../models/room.model";
-import { HotelImage } from "../models/hotelImage.model";
+import { Address } from '../models/address.model';
+import { Location } from '../models/location.model';
+import { Hotel } from '../models/hotel.model';
+import { HotelDto, HotelImageDto } from '../dto/hotel.dto';
+import { Room } from '../models/room.model';
+import { HotelImage } from '../models/hotelImage.model';
+import * as fs from "fs";
+import {join} from "path";
 
 @Injectable()
 export class HotelService {
   constructor(
     private readonly addressService: AddressService,
     @Inject('HotelModel') private readonly hotelModel: typeof Hotel,
+    @Inject('HotelImageModel') private readonly hotelImageModel: typeof HotelImage,
     @Inject('UserModel') private readonly userModel: typeof User,
     @Inject('SEQUELIZE') private readonly sequelize: Sequelize
   ) {}
@@ -59,19 +62,16 @@ export class HotelService {
   }
 
   async getHotel(id: number): Promise<HotelDto> {
-    const hotel = await this.hotelModel.findByPk(
-        id,
+    const hotel = await this.hotelModel.findByPk(id, {
+      include: [
         {
-          include: [
-            {
-              model: Address,
-              include: [Location]
-            },
-            Room,
-            HotelImage
-          ]
-        } as FindOptions
-    );
+          model: Address,
+          include: [Location]
+        },
+        Room,
+        HotelImage
+      ]
+    } as FindOptions);
 
     // check company existing
     if (!hotel) {
@@ -116,5 +116,74 @@ export class HotelService {
 
       throw err;
     }
+  }
+
+  async createHotelImages(
+    files: Array<Express.Multer.File>,
+    hotelId: number,
+    userId: number
+  ): Promise<HotelImageDto[]> {
+    const transaction = await this.sequelize.transaction();
+
+    try {
+      // get user and hotel and check hotel existing and access
+      const user = await this.userModel.findByPk(userId, { transaction });
+
+      const hotel = await this.hotelModel.findByPk(hotelId, { transaction });
+
+      if (!hotel) {
+        throw new InstanceDoesNotExist('Hotel');
+      }
+
+      if (user!.companyId !== hotel!.companyId) {
+        throw new YouDoNotHaveAccessToInstanceError('Company');
+      }
+
+      // mode images to dto and save
+      const hotelImagesDto = files.map(
+        (file: Express.Multer.File): HotelImageDto => ({
+          imagePath: String(file.filename),
+          hotelId: Number(hotelId)
+        })
+      );
+
+      const hotelImages = await this.hotelImageModel.bulkCreate(hotelImagesDto as HotelImage[], {
+        transaction
+      });
+
+      await transaction.commit();
+
+      return hotelImages;
+    } catch (err) {
+      await transaction.rollback();
+
+      throw err;
+    }
+  }
+
+  async deleteHotelImage(id: number, userId: number): Promise<HotelImageDto> {
+    const user = await this.userModel.findByPk(userId);
+
+    const imageToRemove = await this.hotelImageModel.findByPk(id);
+
+    if (!imageToRemove) {
+      throw new InstanceDoesNotExist('Hotel image');
+    }
+
+    const hotel = await this.hotelModel.findByPk(imageToRemove!.hotelId);
+
+    if (!hotel) {
+      throw new InstanceDoesNotExist('Hotel');
+    }
+
+    if (user!.companyId !== hotel!.companyId) {
+      throw new YouDoNotHaveAccessToInstanceError('Company');
+    }
+
+    fs.unlinkSync(join(__dirname, '..', '..', 'images', imageToRemove.imagePath));
+
+    await imageToRemove.destroy();
+
+    return imageToRemove;
   }
 }

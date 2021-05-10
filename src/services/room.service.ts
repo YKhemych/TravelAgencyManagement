@@ -3,9 +3,9 @@ import { Sequelize } from 'sequelize';
 import { User } from '../models/user.model';
 import { InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError } from '../classes/errors.class';
 import { Company } from '../models/company.model';
-import { Hotel } from "../models/hotel.model";
-import { Room } from "../models/room.model";
-import { RoomDto } from "../dto/room.dto";
+import { Hotel } from '../models/hotel.model';
+import { Room } from '../models/room.model';
+import { RoomDto } from '../dto/room.dto';
 
 @Injectable()
 export class RoomService {
@@ -34,7 +34,7 @@ export class RoomService {
       }
 
       // create address
-      const room = await this.roomModel.create({ ...roomDto} as Room, { transaction });
+      const room = await this.roomModel.create({ ...roomDto } as Room, { transaction });
 
       await transaction.commit();
 

@@ -1,5 +1,5 @@
 import { BadRequestException, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
-import {ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserId } from '../config/user.decorator';
 import { AuthenticateGuard } from '../guards/auth.guard';
 import { CompanyDataDto } from '../dto/company.dto';

@@ -39,3 +39,7 @@ nodemon.json
 nodemon.stage.json
 nodemon.master.json
 nodemon.development.json
+
+#images
+images/*
+!images/.gitkeep
