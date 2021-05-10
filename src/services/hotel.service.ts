@@ -10,6 +10,8 @@ import { Hotel } from '../models/hotel.model';
 import { HotelDto, HotelImageDto } from '../dto/hotel.dto';
 import { Room } from '../models/room.model';
 import { HotelImage } from '../models/hotelImage.model';
+import * as fs from "fs";
+import {join} from "path";
 
 @Injectable()
 export class HotelService {
@@ -157,5 +159,31 @@ export class HotelService {
 
       throw err;
     }
+  }
+
+  async deleteHotelImage(id: number, userId: number): Promise<HotelImageDto> {
+    const user = await this.userModel.findByPk(userId);
+
+    const imageToRemove = await this.hotelImageModel.findByPk(id);
+
+    if (!imageToRemove) {
+      throw new InstanceDoesNotExist('Hotel image');
+    }
+
+    const hotel = await this.hotelModel.findByPk(imageToRemove!.hotelId);
+
+    if (!hotel) {
+      throw new InstanceDoesNotExist('Hotel');
+    }
+
+    if (user!.companyId !== hotel!.companyId) {
+      throw new YouDoNotHaveAccessToInstanceError('Company');
+    }
+
+    fs.unlinkSync(join(__dirname, '..', '..', 'images', imageToRemove.imagePath));
+
+    await imageToRemove.destroy();
+
+    return imageToRemove;
   }
 }

@@ -1,6 +1,6 @@
 import {
   BadRequestException,
-  Controller,
+  Controller, Delete,
   ForbiddenException,
   Get,
   Param,
@@ -31,6 +31,7 @@ import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-fi
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as uuid from 'uuid';
+import {StatusDataDto} from "../dto/app.dto";
 
 @ApiBearerAuth()
 @UseGuards(AuthenticateGuard)
@@ -144,8 +145,39 @@ export class HotelController {
     @Param('hotelId') hotelId: number,
     @UserId() userId: number
   ): Promise<HotelImageArrayDataDto> {
-    const hotelImages = await this.hotelService.createHotelImages(images, hotelId, userId);
+    try {
+      const hotelImages = await this.hotelService.createHotelImages(images, hotelId, userId);
 
-    return { data: hotelImages };
+      return { data: hotelImages };
+
+    } catch (err) {
+      switch (err.constructor) {
+        case InstanceDoesNotExist:
+          throw new BadRequestException(errorMessages.INSTANCE_DOES_NOT_EXIST);
+        case YouDoNotHaveAccessToInstanceError:
+          throw new BadRequestException(errorMessages.YOU_DO_NOT_HAVE_ACCESS_TO_INSTANCE);
+        default:
+          throw err;
+      }
+    }
+  }
+
+  @Delete('image/:id')
+  @ApiResponse({ status: 200, description: 'Successfully removed' })
+  async deleteImage(@Param('id') id: number, @UserId() userId: number): Promise<StatusDataDto> {
+    try {
+      await this.hotelService.deleteHotelImage(id, userId);
+
+      return { data: { status: 'deleted' } };
+    } catch (err) {
+      switch (err.constructor) {
+        case InstanceDoesNotExist:
+          throw new BadRequestException(errorMessages.INSTANCE_DOES_NOT_EXIST);
+        case YouDoNotHaveAccessToInstanceError:
+          throw new BadRequestException(errorMessages.YOU_DO_NOT_HAVE_ACCESS_TO_INSTANCE);
+        default:
+          throw err;
+      }
+    }
   }
 }
