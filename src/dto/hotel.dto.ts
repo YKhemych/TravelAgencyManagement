@@ -51,3 +51,22 @@ export class HotelArrayDataDto {
     @ValidateNested({ each: true })
     data: HotelDto[];
 }
+
+export class HotelImageDto {
+    id?: number;
+
+    @ApiProperty({ example: 5 })
+    @IsNumber()
+    hotelId: number;
+
+    @ApiProperty({ example: 'path' })
+    @IsString()
+    imagePath: string;
+}
+
+export class HotelImageArrayDataDto {
+    @ApiProperty({ type: [HotelImageDto] })
+    @Type(() => HotelImageDto)
+    @ValidateNested({ each: true })
+    data: HotelImageDto[];
+}
