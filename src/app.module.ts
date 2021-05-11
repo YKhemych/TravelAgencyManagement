@@ -7,9 +7,18 @@ import { AuthModule } from './modules/auth.module';
 import { CompanyModule } from './modules/company.module';
 import { HotelModule } from './modules/hotel.module';
 import { StaticModule } from './modules/serverStatic.module';
+import { OrderModule } from './modules/order.module';
 
 @Module({
-  imports: [StaticModule, DatabaseModule, UserModule, AuthModule, CompanyModule, HotelModule],
+  imports: [
+    StaticModule,
+    DatabaseModule,
+    UserModule,
+    AuthModule,
+    CompanyModule,
+    HotelModule,
+    OrderModule
+  ],
   controllers: [AppController],
   providers: [AppService]
 })

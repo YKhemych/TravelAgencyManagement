@@ -33,7 +33,7 @@ export class User extends Model<User> {
   password: string;
 
   @Default(Roles.USER)
-  @Column(DataType.ENUM(Roles.ADMIN, Roles.USER))
+  @Column(DataType.ENUM(Roles.ADMIN, Roles.USER, Roles.OWNER))
   role: Roles;
 
   @Column

@@ -1,5 +1,6 @@
 import {
   BelongsTo,
+  BelongsToMany,
   Column,
   CreatedAt,
   ForeignKey,
@@ -11,6 +12,7 @@ import {
 import { Hotel } from './hotel.model';
 import { User } from './user.model';
 import { OrderRoom } from './orderRoom.model';
+import { Room } from './room.model';
 
 @Table
 export class Order extends Model<Order> {
@@ -53,7 +55,10 @@ export class Order extends Model<Order> {
   hotel: Hotel;
 
   @HasMany(() => OrderRoom)
-  roomsWithServices: OrderRoom[];
+  orderRooms: OrderRoom[];
+
+  @BelongsToMany(() => Room, () => OrderRoom)
+  rooms: Room[];
 
   @CreatedAt
   createdAt: Date;
