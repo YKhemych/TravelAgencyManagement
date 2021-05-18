@@ -1,0 +1,41 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+
+  .progress-bar-container {
+    height: 5px;
+  }
+
+  a.mat-list-item.active {
+    background: rgba(0, 0, 0, .04);
+  }
+
+  #push-bottom {
+    position: absolute;
+    bottom: 0;
+  }
+}
+.page-title {
+  color: #000000;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.no-content {
+  height: 100%;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+}
+
+.align-center {
+  align-content: center;
+  align-items: center;
+}

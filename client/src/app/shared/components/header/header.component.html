@@ -1,0 +1,23 @@
+<mat-toolbar class="header-component">
+  <div class="col-8 system-status-section">
+    <div class="col-2 header-logo">Travel agency</div>
+    <div class="col-6 system-status-section">
+        <button mat-button class="user-name" [routerLink]="['/dashboard']">Готелі</button>
+        <button mat-button class="user-name" [routerLink]="['/orders']">Замовлення</button>
+        <button mat-button class="user-name" *ngIf="currentUser && currentUser.role === 'owner'" [routerLink]="['/company']">Компанія</button>
+    </div>
+
+  </div>
+
+  <div class="col-4 no-padding-right system-status-section">
+
+    <div class="system-status-profile">
+      <span class="user-name" *ngIf="currentUser && currentUser.email" [routerLink]="['/user']">{{currentUser.email}}</span>
+    </div>
+    <div class="system-status-profile">
+      <img src="/assets/icons/login_bt.svg" alt="" class="user-profile-menu-block-img"  *ngIf="!currentUser" [routerLink]="['/sign-in']">
+      <img src="/assets/icons/logout_bt.svg" alt="" class="user-profile-menu-block-img"  *ngIf="currentUser" (click)="onLogOut()">
+    </div>
+  </div>
+
+</mat-toolbar>

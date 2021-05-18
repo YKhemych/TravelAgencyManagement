@@ -1,0 +1,98 @@
+@import '../../../styles/variables.scss';
+
+.sign-up-background {
+  width: 60%;
+  height: 100%;
+  background-image: url("/../../../../assets/backgrounds/register_bg.svg");
+  background-size: 100% 100%;
+}
+
+.sign-up {
+  width: 40%;
+  height: 100%;
+  background-color: #ffffff;
+
+  .back-row {
+    margin-top: 38px;
+  }
+  .pointer {
+    cursor: pointer;
+  }
+  h5 {
+    color: $dark-green-color;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  form {
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  .sign-in-row {
+    margin-top: 38px;
+  }
+
+  .email-send-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .back-to-login-btn {
+    margin-top: 30px;
+  }
+
+  input {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    padding: 14px;
+    outline: 0;
+    font-family: inherit;
+    font-size: 0.95em;
+  }
+
+  .form-checkbox {
+    height: 14px;
+    width: 14px;
+    margin: 3px 20px;
+  }
+
+  /* Reset top and bottom margins from certain elements */
+  .login-header {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .field-row {
+    margin-bottom: 10px;
+
+    &-checkbox {
+      display: flex;
+    }
+  }
+  .field-type {
+    color: $black-color;
+  }
+  .required-marker {
+    color: #2d4a30;
+    padding-right: 5px;
+  }
+
+  input {
+    height: 36px;
+    border: 1px solid #979797;
+    background-color: #ffffff;
+  }
+
+  /* Text fields' focus effect */
+  input[type="email"]:focus {
+    border-color: #888;
+  }
+  .pop-up-card-footer {
+    margin-top: 0;
+  }
+}
+

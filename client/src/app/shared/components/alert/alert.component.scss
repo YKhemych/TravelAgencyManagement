@@ -1,0 +1,59 @@
+@import '../../../styles/variables.scss';
+
+.alert {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  &-header {
+    display: flex;
+    flex-direction: row;
+    height: 72px;
+    background-color: #bde1e2;
+    border-radius: 10px 10px 0 0 !important;
+  }
+  &-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #353535;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  &-card {
+    width: auto;
+    height: auto;
+    //min-height: 280px;
+    min-width: 510px;
+  }
+  &-card-logo-block {
+    margin: 24px auto 27px auto;
+  }
+  &-msg {
+    color: #000000;
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    padding: 0 60px !important;
+    text-align: center;
+    margin-top: 27px;
+    margin-bottom: 25px;
+  }
+  .mat-dialog-actions {
+    padding: 0 60px !important;
+  }
+  &-btns {
+    width: 143px;
+    margin-bottom: 32px;
+    border-radius: 4px !important;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: none !important;
+  }
+}

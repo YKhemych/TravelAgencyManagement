@@ -1,0 +1,48 @@
+@import '../../../styles/variables.scss';
+
+.navigation {
+  padding-top: 48px;
+  padding-left: 20px;
+  width: 230px;
+  //background: $gray-color;
+  &-item {
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    opacity: 0.6;
+    color: #000000;
+    outline: none;
+  }
+  &-logo-block {
+    background-image: url("/assets/icons/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    max-width: 160px;
+    width: auto;
+    height: 37px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 42px;
+  }
+  .mat-icon {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    margin-right: 11px;
+    filter: invert(68%) sepia(6%) saturate(11%) hue-rotate(327deg) brightness(86%) contrast(94%);
+  }
+  .activeNavItem {
+    border-right: 2px solid $main-color;
+    height: 45px;
+    color: $main-color;
+    .mat-icon {
+      filter: sepia(100%) brightness(71%) hue-rotate(321deg) saturate(261%) opacity(90%) contrast(178%);
+    }
+  }
+}
