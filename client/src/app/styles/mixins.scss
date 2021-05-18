@@ -1,0 +1,16 @@
+@mixin colorOpacity($color, $opacity) {
+  background-color: rgba($color, $opacity);
+}
+
+@mixin position-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin hide-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+}

@@ -1,0 +1,49 @@
+<div class="pop-up">
+  <div class="login-background"></div>
+
+  <div class="pop-up-card login">
+    <div class="pop-up-card-logo-block">
+      <div class="pop-up-card-logo"></div>
+    </div>
+
+    <div class="pop-up-card-content">
+      <form [formGroup]="loginForm">
+        <div class="field-row">
+          <label class="field-type">
+            <span class="required-marker">*</span>
+            Email
+          </label>
+          <input type="email" placeholder="Email" formControlName="email">
+          <div *ngIf="isSubmitted && loginForm.get('email').hasError('required')" class="help-block"
+               [ngClass]="{'error': loginForm.get('email').hasError('required')}">
+            <span>Email is required</span>
+          </div>
+        </div>
+        <div class="field-row">
+          <label class="field-type">
+            <span class="required-marker">*</span>
+            Password
+          </label>
+          <input type="password" placeholder="Password" formControlName="password">
+          <div *ngIf="isSubmitted && loginForm.get('password').hasError('required')" class="help-block"
+               [ngClass]="{'error': loginForm.get('password').hasError('required')}">
+            <span>Password is required</span>
+          </div>
+        </div>
+        <div class="field-row forgot-password-row">
+          <span class="pointer" routerLink="/forgot-password">Forgot a password?</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="pop-up-card-footer">
+      <button mat-flat-button color="primary" [disabled]="loginForm.invalid" (click)="signIn()">
+        <span>Login</span>
+      </button>
+      <div class="pop-up-card-footer__double sign-up-row">
+        <span class="pointer" routerLink="/sign-up">Don’t have an account?</span>
+        <span class="pointer" routerLink="/sign-up">Sing Up Now</span>
+      </div>
+    </div>
+  </div>
+</div>

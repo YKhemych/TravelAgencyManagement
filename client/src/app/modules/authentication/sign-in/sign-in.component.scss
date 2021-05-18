@@ -1,0 +1,87 @@
+@import '../../../styles/variables.scss';
+
+form {
+  width: 100%;
+  margin-bottom: 10px;
+  color: #000000;
+  font-size: 14px;
+
+  .error {
+    color: $warning-color;
+  }
+
+}
+
+.login-background {
+  width: 60%;
+  height: 100%;
+  background-image: url("/../../../../assets/backgrounds/login_bg.svg");
+  background-size: 100% 100%;
+}
+
+.login {
+  width: 40%;
+  height: 100%;
+  background-color: #ffffff;
+
+  .forgot-password-row {
+    margin-top: 12px;
+    height: 14px;
+    opacity: 0.69;
+    color: #000000;
+    font-family: Arial;
+    font-size: 12px;
+  }
+  .sign-up-row {
+    margin-top: 38px;
+  }
+  .pointer {
+    cursor: pointer;
+  }
+
+  input {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    border-width: 1px;
+    border-style: solid;
+    padding: 16px;
+    outline: 0;
+    font-family: inherit;
+    font-size: 0.95em;
+  }
+
+  /* Reset top and bottom margins from certain elements */
+  .login-header {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .field-row {
+    &:first-child {
+      margin-bottom: 28px;
+    }
+
+  }
+  .field-type {
+    color: $black-color;
+  }
+  .required-marker {
+    color: #2d4a30;
+    padding-right: 5px;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    height: 38px;
+    border: 1px solid #979797;
+    background-color: #ffffff;
+  }
+
+  /* Text fields' focus effect */
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-color: #888;
+  }
+}
+

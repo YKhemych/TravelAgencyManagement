@@ -1,0 +1,11 @@
+<div *ngIf="show">
+  <div class="loader" [ngClass]="inlineStyle ? 'loader-inline' : 'loader-absolute'">
+    <!--<img src="/assets/icons/loading.png" class="rotate-spinner">-->
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate"
+      diameter="50"
+      strokeWidth="2">
+    </mat-progress-spinner>
+  </div>
+</div>

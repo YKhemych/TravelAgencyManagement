@@ -1,0 +1,22 @@
+<div class="navigation">
+  <div class="navigation-logo-block"></div>
+  <hr>
+  <mat-nav-list class="navigation-content">
+    <div class="navigation-item" mat-list-item [routerLink]="['/dashboard']" [routerLinkActive]="'activeNavItem'">
+      <mat-icon svgIcon="dashboard-icon"></mat-icon>
+      <span mat-line>Dashboard</span>
+    </div>
+    <div class="navigation-item" mat-list-item [routerLink]="['/templates']" [routerLinkActive]="'activeNavItem'">
+      <mat-icon svgIcon="templates-icon"></mat-icon>
+      <span mat-line>Templates</span>
+    </div>
+    <div class="navigation-item" mat-list-item [routerLink]="['/history']" [routerLinkActive]="'activeNavItem'">
+      <mat-icon svgIcon="history-icon"></mat-icon>
+      <span mat-line>History</span>
+    </div>
+    <div class="navigation-item" mat-list-item [routerLink]="['/projects']" [routerLinkActive]="'activeNavItem'">
+      <mat-icon svgIcon="projects-icon"></mat-icon>
+      <span mat-line>Projects</span>
+    </div>
+  </mat-nav-list>
+</div>

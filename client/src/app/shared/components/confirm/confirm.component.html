@@ -1,0 +1,22 @@
+<div class="confirm">
+  <div class="confirm-card">
+    <div class="pop-up-card-header center confirm-header">
+      <span class="confirm-title">{{data.title}}</span>
+    </div>
+
+    <div>
+      <div class="confirm-msg">
+        {{data.message}}
+      </div>
+    </div>
+    <mat-dialog-actions align="center">
+      <button mat-stroked-button color="primary" class="confirm-btns" [mat-dialog-close]="false">
+        {{ data.closeButtonLabel }}
+      </button>
+      <button mat-flat-button color="primary" class="confirm-btns" [mat-dialog-close]="true">
+        {{ data.confirmButtonLabel }}
+      </button>
+    </mat-dialog-actions>
+
+  </div>
+</div>
