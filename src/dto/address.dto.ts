@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class LocationDto {
@@ -38,5 +38,6 @@ export class AddressDto {
   @ApiProperty({ type: LocationDto })
   @Type(() => LocationDto)
   @ValidateNested()
-  location: LocationDto;
+  @IsOptional()
+  location?: LocationDto;
 }

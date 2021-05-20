@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FindOptions, Sequelize } from 'sequelize';
 import { User } from '../models/user.model';
-import { InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError } from '../classes/errors.class';
+import {InstanceAlreadyExist, InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError} from '../classes/errors.class';
 import { AddressService } from './address.service';
 import { Company } from '../models/company.model';
 import { Address } from '../models/address.model';
@@ -35,6 +35,7 @@ export class HotelService {
     const hotels = await this.hotelModel.findAll({
       where: { companyId: user!.companyId },
       include: [
+        HotelImage,
         {
           model: Address,
           include: [Location]
@@ -48,6 +49,7 @@ export class HotelService {
   async getHotels(limit: number, offset: number): Promise<HotelDto[]> {
     const hotels = await this.hotelModel.findAll({
       include: [
+        HotelImage,
         {
           model: Address,
           include: [Location]
@@ -64,6 +66,7 @@ export class HotelService {
   async getHotel(id: number): Promise<HotelDto> {
     const hotel = await this.hotelModel.findByPk(id, {
       include: [
+        HotelImage,
         {
           model: Address,
           include: [Location]
@@ -90,6 +93,17 @@ export class HotelService {
 
       if (!user!.companyId) {
         throw new InstanceDoesNotExist('Company');
+      }
+
+      const existedHotel = await this.hotelModel.findOne({
+        where: {
+          name: hotelDto.name,
+          companyId: user!.companyId
+        }
+      });
+
+      if (existedHotel) {
+        throw new InstanceAlreadyExist('Hotel');
       }
 
       // create address

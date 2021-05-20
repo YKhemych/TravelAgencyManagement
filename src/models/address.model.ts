@@ -2,6 +2,7 @@ import {
   BelongsTo,
   Column,
   CreatedAt,
+  DataType,
   ForeignKey,
   Model,
   Table,
@@ -30,8 +31,8 @@ export class Address extends Model<Address> {
   zip: string;
 
   @ForeignKey(() => Location)
-  @Column
-  locationId: number;
+  @Column({ allowNull: true, type: DataType.INTEGER })
+  locationId: number | null;
 
   @BelongsTo(() => Location, { onDelete: 'SET NULL' }) location: Location;
 
