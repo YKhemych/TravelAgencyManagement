@@ -40,6 +40,12 @@ export class ApiService {
       .pipe(catchError(this.catchErr), map(this.getJson));
   }
 
+  public postFormData(path: string, formData: any): Observable<any> {
+    return this.http
+      .post(`${this.URL}${path}`, formData)
+      .pipe(catchError(this.catchErr), map(this.getJson));
+  }
+
   public setHeaders(headers) {
     Object.keys(headers).forEach((header: any) => this.headers.set(header, headers[header]));
   }
