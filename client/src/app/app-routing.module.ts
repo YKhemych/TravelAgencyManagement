@@ -28,6 +28,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'createHotel',
+    loadChildren: () =>
+      import('./modules/hotel/create-hotel/create-hotel.module').then(
+        (m) => m.CreateHotelModule
+      ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'user',
     loadChildren: () => import('./modules/user/user.module').then((m) => m.UserModule),
     canActivate: [AuthGuard]

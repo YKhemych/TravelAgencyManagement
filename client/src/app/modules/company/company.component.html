@@ -67,10 +67,9 @@
               <mat-card-title>{{hotel.name}}</mat-card-title>
               <mat-card-subtitle>{{hotel.address.country}}, {{hotel.address.city}}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+            <img mat-card-image src="{{hotel.hotelImages[0] ? host+'/'+hotel.hotelImages[0].imagePath : '../../assets/icons/image.svg'}}" alt="Photo of hotel">
             <mat-card-content>
-<!--              <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>-->
-              <p>{{hotel.description}}</p>
+              <mat-card-subtitle>Рейтинг: {{hotel.rating}}</mat-card-subtitle>
             </mat-card-content>
             <mat-card-actions>
               <button mat-button class="full-width">Деталі</button>

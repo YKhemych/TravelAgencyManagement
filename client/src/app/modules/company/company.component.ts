@@ -5,6 +5,7 @@ import { CompaniesService } from '../../core/services/company.service';
 import { HotelsService } from '../../core/services/hotel.service';
 import { HotelArrayDataModel, HotelModel } from '../../models/hotel.model';
 import { CompanyDataModel, CompanyModel } from '../../models/company.model';
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +13,7 @@ import { CompanyDataModel, CompanyModel } from '../../models/company.model';
   styleUrls: ['./company.component.scss']
 })
 export class CompanyComponent implements OnInit, OnDestroy {
+  host: string = environment.BACK_END_URL;
   company: CompanyModel;
   hotels: HotelModel[] = [];
 
