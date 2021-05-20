@@ -1,0 +1,123 @@
+<div class="pop-up">
+  <div class="create-company-card">
+
+    <div class="create-company-card-content">
+      <div class="create-company-title-row">
+        <span class="create-company-page-title">Створення компанії</span>
+      </div>
+
+      <div class="create-company-inputs">
+        <form [formGroup]="createCompanyForm">
+          <div class="field-row">`
+            <label class="field-type">
+              <span class="required-marker">*</span>
+              Name
+            </label>
+            <input type="text" placeholder="Name" formControlName="name">
+            <div *ngIf="isSubmitted && createCompanyForm.get('name').hasError('required')" class="help-block"
+                 [ngClass]="{'error': createCompanyForm.get('name').hasError('required')}">
+              <span>Name is required</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <label class="field-type">
+              <span class="required-marker">*</span>
+              Email
+            </label>
+            <input type="email" placeholder="Email" formControlName="email">
+            <div *ngIf="isSubmitted && createCompanyForm.get('email').hasError('required')" class="help-block"
+                 [ngClass]="{'error': createCompanyForm.get('email').hasError('required')}">
+              <span>Email is required</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <label class="field-type">
+              <span class="required-marker">*</span>
+              Phone
+            </label>
+            <input type="text" placeholder="Phone" formControlName="phone">
+            <div *ngIf="isSubmitted && createCompanyForm.get('phone').hasError('required')" class="help-block"
+                 [ngClass]="{'error': createCompanyForm.get('phone').hasError('required')}">
+              <span>Phone is required</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <label class="field-type">
+              <span class="required-marker">*</span>
+              Country
+            </label>
+            <input type="text" placeholder="Country" formControlName="country">
+            <div *ngIf="isSubmitted && createCompanyForm.get('country').hasError('required')" class="help-block"
+                 [ngClass]="{'error': createCompanyForm.get('country').hasError('required')}">
+              <span>This field is required</span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label class="field-type">
+              <span class="required-marker">*</span>
+              City
+            </label>
+            <input type="text" placeholder="City" formControlName="city">
+            <div *ngIf="isSubmitted && createCompanyForm.get('city').hasError('required')" class="help-block"
+                 [ngClass]="{'error': createCompanyForm.get('city').hasError('required')}">
+              <span>This field is required</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <label class="field-type">
+              <span class="required-marker">*</span>
+              State
+            </label>
+            <input type="text" placeholder="State" formControlName="state">
+            <div *ngIf="isSubmitted && createCompanyForm.get('state').hasError('required')" class="help-block"
+                 [ngClass]="{'error': createCompanyForm.get('state').hasError('required')}">
+              <span>This field is required</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <label class="field-type">
+              <span class="required-marker">*</span>
+              Street
+            </label>
+            <input type="text" placeholder="Street" formControlName="street">
+            <div *ngIf="isSubmitted && createCompanyForm.get('street').hasError('required')" class="help-block"
+                 [ngClass]="{'error': createCompanyForm.get('street').hasError('required')}">
+              <span>This field is required</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <label class="field-type">
+              <span class="required-marker">*</span>
+              Zip
+            </label>
+            <input type="text" placeholder="Zip" formControlName="zip">
+            <div *ngIf="isSubmitted && createCompanyForm.get('zip').hasError('required')" class="help-block"
+                 [ngClass]="{'error': createCompanyForm.get('zip').hasError('required')}">
+              <span>This field is required</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <label class="field-type">
+              Latitude
+            </label>
+            <input type="number" placeholder="Latitude" formControlName="latitude">
+          </div>
+          <div class="field-row">
+            <label class="field-type">
+              Longitude
+            </label>
+            <input type="number" placeholder="Longitude" formControlName="latitude">
+          </div>
+        </form>
+      </div>
+
+      <div class="pop-up-card-footer">
+        <button mat-flat-button color="primary" [disabled]="createCompanyForm.invalid" (click)="createCompany()">
+          <span>Send</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

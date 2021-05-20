@@ -15,6 +15,19 @@ const routes: Routes = [
       import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule)
   },
   {
+    path: 'company',
+    loadChildren: () => import('./modules/company/company.module').then((m) => m.CompanyModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'createCompany',
+    loadChildren: () =>
+      import('./modules/company/create-company/create-company.module').then(
+        (m) => m.CreateCompanyModule
+      ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'user',
     loadChildren: () => import('./modules/user/user.module').then((m) => m.UserModule),
     canActivate: [AuthGuard]
