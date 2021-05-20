@@ -1,0 +1,84 @@
+<div class="pop-up">
+  <div class="company-card">
+    <div class="company-card-content" *ngIf="!company">
+      <div class="company-card-field-row pop-up-card-footer__double">
+        <span class="company-card-field">Зараз не зареєстрована ніяка компанія</span>
+        <button mat-button class="mat-focus-indicator user-name mat-button mat-button-base">
+          <span class="pointer" routerLink="/createCompany">Зареєструвати компанію</span>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="company-card-content" *ngIf="company">
+      <div class="company-card-title-row">
+        <span class="company-page-title">Інформація про компанію</span>
+      </div>
+      <span class="company-card-splitter"></span>
+
+      <div class="company-card-field-row">
+        <span class="company-card-field">Назва: </span>
+        <span class="company-card-field">{{company.name}}</span>
+      </div>
+      <div class="company-card-field-row">
+        <span class="company-card-field">Електронна адреса: </span>
+        <span class="company-card-field">{{company.email}}</span>
+      </div>
+
+
+      <div class="company-card-title-row">
+        <span class="company-page-title">Адреса</span>
+      </div>
+      <span class="company-card-splitter"></span>
+
+      <div class="company-card-field-row">
+        <span class="company-card-field">Країна: </span>
+        <span class="company-card-field">{{company.address.country}}</span>
+      </div>
+      <div class="company-card-field-row">
+        <span class="company-card-field">Область: </span>
+        <span class="company-card-field">{{company.address.state}}</span>
+      </div>
+      <div class="company-card-field-row">
+        <span class="company-card-field">Місто: </span>
+        <span class="company-card-field">{{company.address.city}}</span>
+      </div>
+      <div class="company-card-field-row">
+        <span class="company-card-field">Вулиця: </span>
+        <span class="company-card-field">{{company.address.street}}</span>
+      </div>
+      <div class="company-card-field-row">
+        <span class="company-card-field">Код: </span>
+        <span class="company-card-field">{{company.address.zip}}</span>
+      </div>
+
+      <div class="company-card-title-row">
+        <span class="company-page-title">Готелі</span>
+        <button mat-button class="mat-focus-indicator user-name mat-button mat-button-base">
+          <span class="pointer" routerLink="/createHotel">Додати готель</span>
+        </button>
+      </div>
+      <span class="company-card-splitter"></span>
+
+      <div class="company-card-hotel-list">
+        <div *ngFor="let hotel of hotels; let i = index" class="company-card-hotel-list-inner-item">
+          <mat-card class="company-card-hotel-list-item">
+            <mat-card-header>
+              <mat-card-title>{{hotel.name}}</mat-card-title>
+              <mat-card-subtitle>{{hotel.address.country}}, {{hotel.address.city}}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="{{hotel.hotelImages[0] ? host+'/'+hotel.hotelImages[0].imagePath : '../../assets/icons/image.svg'}}" alt="Photo of hotel">
+            <mat-card-content>
+              <mat-card-subtitle>Рейтинг: {{hotel.rating}}</mat-card-subtitle>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button class="full-width">Деталі</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

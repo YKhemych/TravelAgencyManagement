@@ -4,6 +4,25 @@ import { Type } from 'class-transformer';
 import { AddressDto } from './address.dto';
 import { RoomDto } from './room.dto';
 
+export class HotelImageDto {
+  id?: number;
+
+  @ApiProperty({ example: 5 })
+  @IsNumber()
+  hotelId: number;
+
+  @ApiProperty({ example: 'path' })
+  @IsString()
+  imagePath: string;
+}
+
+export class HotelImageArrayDataDto {
+  @ApiProperty({ type: [HotelImageDto] })
+  @Type(() => HotelImageDto)
+  @ValidateNested({ each: true })
+  data: HotelImageDto[];
+}
+
 export class HotelDto {
   id: number;
 
@@ -36,6 +55,12 @@ export class HotelDto {
   rooms?: RoomDto[];
 
   companyId: number;
+
+  @ApiProperty({ type: [HotelImageDto] })
+  @Type(() => HotelImageDto)
+  @ValidateNested({ each: true })
+  @IsOptional()
+  hotelImages?: HotelImageDto[];
 }
 
 export class HotelDataDto {
@@ -50,23 +75,4 @@ export class HotelArrayDataDto {
   @Type(() => HotelDto)
   @ValidateNested({ each: true })
   data: HotelDto[];
-}
-
-export class HotelImageDto {
-  id?: number;
-
-  @ApiProperty({ example: 5 })
-  @IsNumber()
-  hotelId: number;
-
-  @ApiProperty({ example: 'path' })
-  @IsString()
-  imagePath: string;
-}
-
-export class HotelImageArrayDataDto {
-  @ApiProperty({ type: [HotelImageDto] })
-  @Type(() => HotelImageDto)
-  @ValidateNested({ each: true })
-  data: HotelImageDto[];
 }

@@ -12,15 +12,18 @@ export class AddressService {
   ) {}
 
   async createAddress(addressDto: AddressDto, transaction: Transaction): Promise<AddressDto> {
-    // create location
-    const location = await this.locationModel.create(addressDto.location as Location, {
-      transaction
-    });
+    let location;
+
+    if (addressDto.location) {
+      location = await this.locationModel.create(addressDto.location as Location, {
+        transaction
+      });
+    }
 
     // create address
     const address = await this.addressModel.create(
       {
-        locationId: location.id,
+        locationId: location ? location.id : null,
         ...addressDto
       } as Address,
       {
