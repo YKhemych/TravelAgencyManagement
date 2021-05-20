@@ -75,4 +75,6 @@ export class HotelArrayDataDto {
   @Type(() => HotelDto)
   @ValidateNested({ each: true })
   data: HotelDto[];
+
+  totalCount?: number;
 }

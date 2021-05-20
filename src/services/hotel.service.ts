@@ -7,7 +7,7 @@ import { Company } from '../models/company.model';
 import { Address } from '../models/address.model';
 import { Location } from '../models/location.model';
 import { Hotel } from '../models/hotel.model';
-import { HotelDto, HotelImageDto } from '../dto/hotel.dto';
+import {HotelArrayDataDto, HotelDto, HotelImageDto} from '../dto/hotel.dto';
 import { Room } from '../models/room.model';
 import { HotelImage } from '../models/hotelImage.model';
 import * as fs from 'fs';
@@ -23,7 +23,7 @@ export class HotelService {
     @Inject('SEQUELIZE') private readonly sequelize: Sequelize
   ) {}
 
-  async getHotelsForUser(userId: number): Promise<HotelDto[]> {
+  async getHotelsForUser(userId: number, limit: number, offset: number): Promise<HotelArrayDataDto> {
     // get user with company
     const user = await this.userModel.findByPk(userId);
 
@@ -40,13 +40,23 @@ export class HotelService {
           model: Address,
           include: [Location]
         }
-      ]
+      ],
+      order: [['updatedAt', 'DESC']],
+      limit: Number(limit),
+      offset: Number(offset)
     } as FindOptions);
 
-    return hotels;
+    const count = await this.hotelModel.count({
+      where: { companyId: user!.companyId }
+    })
+
+    return {
+      data: hotels,
+      totalCount: count
+    };
   }
 
-  async getHotels(limit: number, offset: number): Promise<HotelDto[]> {
+  async getHotels(limit: number, offset: number): Promise<HotelArrayDataDto> {
     const hotels = await this.hotelModel.findAll({
       include: [
         HotelImage,
@@ -60,7 +70,12 @@ export class HotelService {
       offset: Number(offset)
     } as FindOptions);
 
-    return hotels;
+    const count = await this.hotelModel.count();
+
+    return {
+      data: hotels,
+      totalCount: count
+    };
   }
 
   async getHotel(id: number): Promise<HotelDto> {
