@@ -29,7 +29,7 @@ export class HotelsService {
     return this.api.post('/hotel', data);
   }
 
-  // createHotelImages(data) {
-  //   return this.api.post('/hotel', data);
-  // }
+  createHotelImages(data, hotelId) {
+    return this.api.postFormData(`/hotel/image/${hotelId}`, data);
+  }
 }
