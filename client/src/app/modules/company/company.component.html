@@ -79,6 +79,15 @@
 
       </div>
 
+      <mat-paginator
+        [length]="totalSize"
+        [pageSize]="pageSize"
+        [pageIndex]="currentPage"
+        [pageSizeOptions]="[8, 16, 32, 64]"
+        (page)="handlePage($event)"
+        class="full-width" >
+      </mat-paginator>
+
     </div>
   </div>
 </div>

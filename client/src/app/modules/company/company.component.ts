@@ -12,10 +12,16 @@ import { environment } from "../../../environments/environment";
   templateUrl: './company.component.html',
   styleUrls: ['./company.component.scss']
 })
-export class CompanyComponent implements OnInit, OnDestroy {
+export class CompanyComponent implements OnInit {
   host: string = environment.BACK_END_URL;
   company: CompanyModel;
   hotels: HotelModel[] = [];
+
+  public pageSize = 8;
+  public currentPage = 0;
+  public totalSize = 100;
+  public offset = 0;
+  public limit = this.pageSize
 
   constructor(
     private router: Router,
@@ -33,13 +39,26 @@ export class CompanyComponent implements OnInit, OnDestroy {
     this.companiesService.getCompany().subscribe((res: CompanyDataModel) => {
       this.company = res.data;
     });
-    this.hotelsService.getHotelsForUser().subscribe((res: HotelArrayDataModel) => {
+    this.getHotelsForUser();
+  }
+
+  getHotelsForUser() {
+    this.hotelsService.getHotelsForUser(this.limit, this.offset).subscribe((res: HotelArrayDataModel) => {
       this.hotels = res.data;
+      this.totalSize = res.totalCount;
     });
   }
 
-  ngOnDestroy() {
-    // this.destroy$.next(true);
-    // this.destroy$.unsubscribe();
+  public handlePage(e: any) {
+    this.currentPage = e.pageIndex;
+    this.pageSize = e.pageSize;
+    this.iterator();
   }
+
+  private iterator() {
+    this.limit = (this.currentPage + 1) * this.pageSize;
+    this.offset = this.currentPage * this.pageSize;
+    this.getHotelsForUser();
+  }
+
 }
