@@ -33,6 +33,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 /**
  * SharedModule contains code that will be used across the app and Feature Modules. This includes:
@@ -61,6 +62,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDividerModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatSnackBarModule,
     MatCardModule,
     MatTabsModule,
@@ -95,6 +97,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDividerModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatSnackBarModule,
     MatCardModule,
     MatTabsModule,
