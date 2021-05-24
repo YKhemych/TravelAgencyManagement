@@ -13,12 +13,12 @@ export class HotelsService {
     private api: ApiService
   ) {}
 
-  getAllHotels() {
-    return this.api.get('/hotel');
+  getAllHotels(limit: number, offset: number) {
+    return this.api.get(`/hotel?limit=${limit}&offset=${offset}`);
   }
 
-  getHotelsForUser() {
-    return this.api.get('/hotel/user');
+  getHotelsForUser(limit: number, offset: number) {
+    return this.api.get(`/hotel/user?limit=${limit}&offset=${offset}`);
   }
 
   getHotelById(id: number) {

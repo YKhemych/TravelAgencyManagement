@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+
+
+.card {
+  box-sizing: border-box;
+  width: 80%;
+  //height: 567px;
+  padding: 30px;
+  box-shadow: 0 2px 35px rgba(0, 0, 0, 0.22);
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  color: $black-color;
+  font-family: Arial;
+
+  &-hotel-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &-inner-item {
+      max-width: 310px;
+      flex-grow: 1;
+      flex-basis: 240px;
+    }
+
+    &-item {
+      margin: 8px;
+    }
+
+  }
+}

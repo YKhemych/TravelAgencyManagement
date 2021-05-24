@@ -10,55 +10,65 @@
       <h5 class="card-title">Create Account</h5>
       <form [formGroup]="signUpForm">
         <div class="field-row">
-          <label class="field-type">
-            <span class="required-marker">*</span>
-            Name
-          </label>
-          <input type="name" placeholder="Name" formControlName="name">
+          <mat-form-field class="full-width">
+            <mat-label>
+              <span class="required-marker">*</span>
+              Name
+            </mat-label>
+            <input matInput type="text" formControlName="name">
+          </mat-form-field>
           <div *ngIf="isSubmitted && signUpForm.get('name').hasError('required')" class="help-block"
                [ngClass]="{'error': signUpForm.get('name').hasError('required')}">
             <span>Name is required</span>
           </div>
         </div>
         <div class="field-row">
-          <label class="field-type">
-            <span class="required-marker">*</span>
-            Surname
-          </label>
-          <input type="surname" placeholder="Surname" formControlName="surname">
+          <mat-form-field class="full-width">
+            <mat-label>
+              <span class="required-marker">*</span>
+              Surname
+            </mat-label>
+            <input matInput type="text" formControlName="surname">
+          </mat-form-field>
           <div *ngIf="isSubmitted && signUpForm.get('surname').hasError('required')" class="help-block"
                [ngClass]="{'error': signUpForm.get('surname').hasError('required')}">
             <span>Surname is required</span>
           </div>
         </div>
         <div class="field-row">
-          <label class="field-type">
-            <span class="required-marker">*</span>
-            Email
-          </label>
-          <input type="email" placeholder="Email" formControlName="email">
+          <mat-form-field class="full-width">
+            <mat-label>
+              <span class="required-marker">*</span>
+              Email
+            </mat-label>
+            <input matInput type="email" formControlName="email">
+          </mat-form-field>
           <div *ngIf="isSubmitted && signUpForm.get('email').hasError('required')" class="help-block"
                [ngClass]="{'error': signUpForm.get('email').hasError('required')}">
             <span>Email is required</span>
           </div>
         </div>
         <div class="field-row">
-          <label class="field-type">
-            <span class="required-marker">*</span>
-            Phone
-          </label>
-          <input type="phone" placeholder="Phone" formControlName="phone">
+          <mat-form-field class="full-width">
+            <mat-label>
+              <span class="required-marker">*</span>
+              Phone
+            </mat-label>
+            <input matInput type="text" formControlName="phone">
+          </mat-form-field>
           <div *ngIf="isSubmitted && signUpForm.get('phone').hasError('required')" class="help-block"
                [ngClass]="{'error': signUpForm.get('phone').hasError('required')}">
             <span>Phone is required</span>
           </div>
         </div>
         <div class="field-row">
-          <label class="field-type">
-            <span class="required-marker">*</span>
-            Password
-          </label>
-          <input type="password" placeholder="Password" formControlName="password">
+          <mat-form-field class="full-width">
+            <mat-label>
+              <span class="required-marker">*</span>
+              Password
+            </mat-label>
+            <input matInput type="password" formControlName="password">
+          </mat-form-field>
           <div *ngIf="isSubmitted && signUpForm.get('password').hasError('required')" class="help-block"
                [ngClass]="{'error': signUpForm.get('password').hasError('required')}">
             <span>This field is required</span>
@@ -69,11 +79,13 @@
           </mat-error>
         </div>
         <div class="field-row">
-          <label class="field-type">
-            <span class="required-marker">*</span>
-            Confirm Password
-          </label>
-          <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+          <mat-form-field class="full-width">
+            <mat-label>
+              <span class="required-marker">*</span>
+              Confirm Password
+            </mat-label>
+            <input matInput type="password" formControlName="confirmPassword">
+          </mat-form-field>
           <div *ngIf="isSubmitted && signUpForm.get('confirmPassword').hasError('required')" class="help-block"
                [ngClass]="{'error': signUpForm.get('confirmPassword').hasError('required')}">
             <span>This field is required</span>

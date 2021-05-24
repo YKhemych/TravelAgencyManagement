@@ -24,6 +24,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 import { AlertComponent } from './components/alert/alert.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
@@ -32,7 +35,6 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MatToolbarModule } from '@angular/material/toolbar';
 
 /**
  * SharedModule contains code that will be used across the app and Feature Modules. This includes:
@@ -72,7 +74,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSliderModule,
     NgbModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCarouselModule.forRoot()
   ],
   declarations: [
     AlertComponent,
@@ -109,7 +112,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatNativeDateModule,
     AlertComponent,
     ConfirmComponent,
-    MatExpansionModule
+    MatExpansionModule,
+    MatPaginatorModule,
+    MatCarouselModule
   ],
   providers: [AlertService],
   entryComponents: [

@@ -43,12 +43,9 @@
   }
 
   input {
-    box-sizing: border-box;
     display: block;
     width: 100%;
-    border-width: 1px;
-    border-style: solid;
-    padding: 14px;
+    padding: 5px;
     outline: 0;
     font-family: inherit;
     font-size: 0.95em;
@@ -67,7 +64,7 @@
   }
 
   .field-row {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 
     &-checkbox {
       display: flex;
@@ -81,16 +78,6 @@
     padding-right: 5px;
   }
 
-  input {
-    height: 36px;
-    border: 1px solid #979797;
-    background-color: #ffffff;
-  }
-
-  /* Text fields' focus effect */
-  input[type="email"]:focus {
-    border-color: #888;
-  }
   .pop-up-card-footer {
     margin-top: 0;
   }

@@ -29,4 +29,5 @@ export class HotelDataModel {
 
 export class HotelArrayDataModel {
   data: HotelModel[];
+  totalCount: number;
 }

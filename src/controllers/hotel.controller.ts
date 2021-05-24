@@ -75,21 +75,24 @@ export class HotelController {
     @Query('limit') limit = config.DEFAULT_LIMIT,
     @Query('offset') offset = 0
   ): Promise<HotelArrayDataDto> {
-    const company = await this.hotelService.getHotels(limit, offset);
-
-    return { data: company };
+    return  this.hotelService.getHotels(limit, offset);
   }
 
   @Get('/user')
+  @ApiImplicitQuery({ name: 'limit', required: false })
+  @ApiImplicitQuery({ name: 'offset', required: false })
   @ApiOkResponse({
     type: HotelArrayDataDto,
     description: 'Get hotels'
   })
-  async getUser(@UserId() userId: number): Promise<HotelArrayDataDto> {
+  async getUser(
+      @UserId() userId: number,
+      @Query('limit') limit = config.DEFAULT_LIMIT,
+      @Query('offset') offset = 0
+  ): Promise<HotelArrayDataDto> {
     try {
-      const company = await this.hotelService.getHotelsForUser(userId);
+      return this.hotelService.getHotelsForUser(userId, limit, offset);
 
-      return { data: company };
     } catch (err) {
       switch (err.constructor) {
         case InstanceDoesNotExist:

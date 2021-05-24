@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () =>
-      import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule)
+      import('./modules/hotel/hotel.module').then((m) => m.HotelModule)
   },
   {
     path: 'company',
@@ -34,6 +34,14 @@ const routes: Routes = [
         (m) => m.CreateHotelModule
       ),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'hotel/:hotelId',
+    loadChildren: () =>
+      import('./modules/hotel/hotel-info/hotel-info.module').then(
+        (m) => m.HotelInfoModule
+      ),
+    canActivate: []
   },
   {
     path: 'user',

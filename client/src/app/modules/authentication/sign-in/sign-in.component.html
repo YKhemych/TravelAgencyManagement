@@ -7,24 +7,28 @@
     </div>
 
     <div class="pop-up-card-content">
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" style="margin-top: 90px">
         <div class="field-row">
-          <label class="field-type">
-            <span class="required-marker">*</span>
-            Email
-          </label>
-          <input type="email" placeholder="Email" formControlName="email">
+          <mat-form-field class="full-width">
+            <mat-label>
+              <span class="required-marker">*</span>
+              Email
+            </mat-label>
+            <input matInput type="email" formControlName="email">
+          </mat-form-field>
           <div *ngIf="isSubmitted && loginForm.get('email').hasError('required')" class="help-block"
                [ngClass]="{'error': loginForm.get('email').hasError('required')}">
             <span>Email is required</span>
           </div>
         </div>
         <div class="field-row">
-          <label class="field-type">
-            <span class="required-marker">*</span>
-            Password
-          </label>
-          <input type="password" placeholder="Password" formControlName="password">
+          <mat-form-field class="full-width">
+            <mat-label>
+              <span class="required-marker">*</span>
+              Password
+            </mat-label>
+            <input matInput type="password" formControlName="password">
+          </mat-form-field>
           <div *ngIf="isSubmitted && loginForm.get('password').hasError('required')" class="help-block"
                [ngClass]="{'error': loginForm.get('password').hasError('required')}">
             <span>Password is required</span>
