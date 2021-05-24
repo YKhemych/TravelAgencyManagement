@@ -35,6 +35,9 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatChipsModule } from "@angular/material/chips";
+import { MomentDateModule } from '@angular/material-moment-adapter';
 
 /**
  * SharedModule contains code that will be used across the app and Feature Modules. This includes:
@@ -65,6 +68,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatCardModule,
+    MatChipsModule,
     MatTabsModule,
     MatTreeModule,
     MatToolbarModule,
@@ -75,6 +79,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     MatExpansionModule,
     MatMenuModule,
+    MatAutocompleteModule,
+    MomentDateModule,
     MatCarouselModule.forRoot()
   ],
   declarations: [
@@ -114,7 +120,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ConfirmComponent,
     MatExpansionModule,
     MatPaginatorModule,
-    MatCarouselModule
+    MatCarouselModule,
+    MatAutocompleteModule,
+    MatChipsModule,
+    MomentDateModule
   ],
   providers: [AlertService],
   entryComponents: [
