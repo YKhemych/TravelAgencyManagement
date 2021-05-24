@@ -1,0 +1,142 @@
+<div class="pop-up">
+  <div class="card">
+    <mat-carousel
+      timings="300ms ease-in"
+      [autoplay]="false"
+      interval="5000"
+      color="primary"
+      maxWidth="auto"
+      slideHeight="400px"
+      [maintainAspectRatio]="false"
+      slides="{{slides.length}}"
+      [loop]="true"
+      [hideArrows]="false"
+      [hideIndicators]="false"
+      [useKeyboard]="true"
+      [useMouseWheel]="false"
+      orientation="ltr"
+    >
+      <mat-carousel-slide
+        #matCarouselSlide
+        *ngFor="let slide of slides; let i = index"
+        [image]="slide.image"
+        overlayColor="#00000040"
+        [hideOverlay]="false"
+      ></mat-carousel-slide>
+    </mat-carousel>
+
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Інформація">
+        <div class="card-content">
+          <div class="card-field-row">
+            <span class="card-field">Назва: </span>
+            <span class="card-field">{{hotel.name}}</span>
+          </div>
+          <div class="card-field-row">
+            <span class="card-field">Електронна адреса: </span>
+            <span class="card-field">{{hotel.phone}}</span>
+          </div>
+          <div class="card-field-row">
+            <span class="card-field">Рейтинг: </span>
+            <span class="card-field">{{hotel.rating}}</span>
+          </div>
+          <div class="card-field-row">
+            <span class="card-field">Опис: </span>
+            <span class="card-field">{{hotel.description}}</span>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Адреса">
+        <div class="card-content">
+          <div class="card-field-row">
+            <span class="card-field">Країна: </span>
+            <span class="card-field">{{hotel.address.country}}</span>
+          </div>
+          <div class="card-field-row">
+            <span class="card-field">Область: </span>
+            <span class="card-field">{{hotel.address.state}}</span>
+          </div>
+          <div class="card-field-row">
+            <span class="card-field">Місто: </span>
+            <span class="card-field">{{hotel.address.city}}</span>
+          </div>
+          <div class="card-field-row">
+            <span class="card-field">Вулиця: </span>
+            <span class="card-field">{{hotel.address.street}}</span>
+          </div>
+          <div class="card-field-row">
+            <span class="card-field">Код: </span>
+            <span class="card-field">{{hotel.address.zip}}</span>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Кімнати">
+
+        <div class="card-content">
+          <div class="card-title-row">
+            <span class="company-page-title">Список кімнат</span>
+            <button mat-button class="mat-focus-indicator mat-button mat-button-base" *ngIf="user.companyId === hotel.companyId">
+              <span class="pointer" routerLink="/createRoom">Додати кімнату</span>
+            </button>
+          </div>
+          <div *ngFor="let room of hotel.rooms; let i = index" class="card-item-row">
+            <div class="card-field-row">
+              <div>
+                <span class="card-field">Назва: </span>
+                <span class="card-field">{{room.name}}</span>
+              </div>
+              <div>
+                <span class="card-field">Тип: </span>
+                <span class="card-field">{{room.roomType}}</span>
+              </div>
+            </div>
+            <div class="card-field-row">
+              <div>
+                <span class="card-field">Місткість: </span>
+                <span class="card-field">{{room.roomCapacity}}</span>
+              </div>
+              <div>
+                <span class="card-field">Ціна: </span>
+                <span class="card-field">{{room.pricePerDay}}$</span>
+              </div>
+            </div>
+            <div class="card-field-row">
+              <span class="card-field">Опис: </span>
+              <span class="card-field">{{room.description}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Замовлення"> Content 2 </mat-tab>
+      <mat-tab label="Відгуки"> Content 3 </mat-tab>
+    </mat-tab-group>
+<!--          <div class="company-card-content" *ngIf="!company">-->
+<!--            <div class="company-card-field-row pop-up-card-footer__double">-->
+<!--              <span class="company-card-field">Зараз не зареєстрована ніяка компанія</span>-->
+<!--              <button mat-button class="mat-focus-indicator user-name mat-button mat-button-base">-->
+<!--                <span class="pointer" routerLink="/createCompany">Зареєструвати компанію</span>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+<!--    -->
+<!--          <div class="company-card-content" *ngIf="company">-->
+<!--            <div class="company-card-title-row">-->
+<!--              <span class="company-page-title">Інформація про компанію</span>-->
+<!--            </div>-->
+<!--            <span class="company-card-splitter"></span>-->
+
+<!--            <div class="company-card-field-row">-->
+<!--              <span class="company-card-field">Назва: </span>-->
+<!--              <span class="company-card-field">{{company.name}}</span>-->
+<!--            </div>-->
+<!--            <div class="company-card-field-row">-->
+<!--              <span class="company-card-field">Електронна адреса: </span>-->
+<!--              <span class="company-card-field">{{company.email}}</span>-->
+<!--            </div>-->
+
+
+
+  </div>
+</div>

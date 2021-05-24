@@ -36,6 +36,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'hotel/:hotelId',
+    loadChildren: () =>
+      import('./modules/hotel/hotel-info/hotel-info.module').then(
+        (m) => m.HotelInfoModule
+      ),
+    canActivate: []
+  },
+  {
     path: 'user',
     loadChildren: () => import('./modules/user/user.module').then((m) => m.UserModule),
     canActivate: [AuthGuard]

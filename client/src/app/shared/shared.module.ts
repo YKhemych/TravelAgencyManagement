@@ -26,6 +26,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 import { AlertComponent } from './components/alert/alert.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
@@ -73,7 +74,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSliderModule,
     NgbModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCarouselModule.forRoot()
   ],
   declarations: [
     AlertComponent,
@@ -111,7 +113,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AlertComponent,
     ConfirmComponent,
     MatExpansionModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCarouselModule
   ],
   providers: [AlertService],
   entryComponents: [
