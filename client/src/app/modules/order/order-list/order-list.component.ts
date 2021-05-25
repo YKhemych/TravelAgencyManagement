@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../../core/services/alert/alert.service';
-import { environment } from "../../../../environments/environment";
-import {OrdersService} from "../../../core/services/order.service";
-import {OrderArrayDataModel, OrderModel} from "../../../models/order.model";
+import { environment } from '../../../../environments/environment';
+import { OrdersService } from '../../../core/services/order.service';
+import { OrderArrayDataModel, OrderModel } from '../../../models/order.model';
 import * as moment from 'moment';
-import {UserModel} from "../../../models/authentication.model";
-import {UsersService} from "../../../core/services/users/users.service";
-import {FormControl} from "@angular/forms";
+import { UserModel } from '../../../models/authentication.model';
+import { UsersService } from '../../../core/services/users/users.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,18 +22,16 @@ export class OrderListComponent implements OnInit {
   public currentPage = 0;
   public totalSize = 100;
   public offset = 0;
-  public limit = this.pageSize
+  public limit = this.pageSize;
 
   actionControl = new FormControl('');
 
   actions = [
-    { name: 'Відхилити', value: 'canceled'},
-    { name: 'Схалити', value: 'accepted'},
-    { name: 'Оплатити', value: 'paid'},
-    { name: 'Виконано', value: 'executed'}
-    ];
-
-
+    { name: 'Відхилити', value: 'canceled' },
+    { name: 'Схалити', value: 'accepted' },
+    { name: 'Оплатити', value: 'paid' },
+    { name: 'Виконано', value: 'executed' }
+  ];
 
   constructor(
     private router: Router,
@@ -55,29 +53,31 @@ export class OrderListComponent implements OnInit {
   }
 
   getOrders() {
-    this.ordersService.getAllOrders(this.limit, this.offset).subscribe((res: OrderArrayDataModel) => {
-      this.orders = res.data.map((order) => {
-        order.startTime = moment(order.startTime).utc().format('YYYY-MM-DD')
-        order.endTime = moment(order.endTime).utc().format('YYYY-MM-DD')
+    this.ordersService
+      .getAllOrders(this.limit, this.offset)
+      .subscribe((res: OrderArrayDataModel) => {
+        this.orders = res.data.map((order) => {
+          order.startTime = moment(order.startTime).utc().format('YYYY-MM-DD');
+          order.endTime = moment(order.endTime).utc().format('YYYY-MM-DD');
 
-        order.status = 'pending';
-        if (new Date(order.startTime) < new Date() || order.deletedAt) {
-          order.status = 'canceled';
-        }
-        if(order.isAccepted) {
-          order.status = 'accepted'
-        }
-        if(order.isPaid) {
-          order.status = 'paid'
-        }
-        if(order.isExecuted) {
-          order.status = 'executed'
-        }
+          order.status = 'pending';
+          if (new Date(order.startTime) < new Date() || order.deletedAt) {
+            order.status = 'canceled';
+          }
+          if (order.isAccepted) {
+            order.status = 'accepted';
+          }
+          if (order.isPaid) {
+            order.status = 'paid';
+          }
+          if (order.isExecuted) {
+            order.status = 'executed';
+          }
 
-        return order;
+          return order;
+        });
+        this.totalSize = res.totalCount;
       });
-      this.totalSize = res.totalCount;
-    });
   }
 
   public getDescByStatus(status: string) {
@@ -125,20 +125,21 @@ export class OrderListComponent implements OnInit {
       isAccepted: action === 'accepted' ? true : undefined,
       isExecuted: action === 'executed' ? true : undefined,
       isPaid: action === 'paid' ? true : undefined,
-      deletedAt: action === 'canceled' ? new Date() : undefined,
-    }
+      deletedAt: action === 'canceled' ? new Date() : undefined
+    };
 
     console.log(order);
 
-    this.ordersService.updateOrder({ data: order }).subscribe((res) => {
+    this.ordersService.updateOrder({ data: order }).subscribe(
+      (res) => {
         if (res) {
           this.getOrders();
         }
-    },
-    (err) => {
-      this.alertService.openErrorModal('error', err.error.message);
-    });
-
+      },
+      (err) => {
+        this.alertService.openErrorModal('error', err.error.message);
+      }
+    );
   }
 
   public handlePage(e: any) {

@@ -25,7 +25,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 import { AlertComponent } from './components/alert/alert.component';
@@ -35,8 +35,8 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
-import { MatChipsModule } from "@angular/material/chips";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 
 /**

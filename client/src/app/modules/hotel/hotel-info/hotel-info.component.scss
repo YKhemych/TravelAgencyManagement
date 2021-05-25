@@ -77,20 +77,4 @@
     font-size: 16px;
     font-weight: 700;
   }
-
-  &-hotel-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    &-inner-item {
-      max-width: 310px;
-      flex-grow: 1;
-      flex-basis: 210px;
-    }
-
-    &-item {
-      margin: 8px;
-    }
-  }
 }

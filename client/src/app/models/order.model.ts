@@ -1,5 +1,5 @@
-import {RoomModel} from "./room.model";
-import {HotelModel} from "./hotel.model";
+import { RoomModel } from './room.model';
+import { HotelModel } from './hotel.model';
 
 export class OrderModel {
   id?: number;

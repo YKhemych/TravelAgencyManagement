@@ -1,34 +1,37 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../../core/services/alert/alert.service';
 import { HotelsService } from '../../../core/services/hotel.service';
-import { environment } from "../../../../environments/environment";
-import {HotelDataModel, HotelModel} from '../../../models/hotel.model';
-import {UserModel} from "../../../models/authentication.model";
-import {UsersService} from "../../../core/services/users/users.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AddressDto} from "../../../../../../src/dto/address.dto";
-import {MatAutocompleteSelectedEvent, MatAutocomplete} from "@angular/material/autocomplete";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import {Observable} from "rxjs";
-import {MatChipInputEvent} from "@angular/material/chips";
-import {map, startWith} from "rxjs/operators";
-import {OrderModel} from "../../../models/order.model";
+import { environment } from '../../../../environments/environment';
+import { HotelDataModel, HotelModel } from '../../../models/hotel.model';
+import { UserModel } from '../../../models/authentication.model';
+import { UsersService } from '../../../core/services/users/users.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AddressDto } from '../../../../../../src/dto/address.dto';
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Observable } from 'rxjs';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { map, startWith } from 'rxjs/operators';
+import { OrderModel } from '../../../models/order.model';
 import * as moment from 'moment';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from "@angular/material-moment-adapter";
-import {OrdersService} from "../../../core/services/order.service";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter
+} from '@angular/material-moment-adapter';
+import { OrdersService } from '../../../core/services/order.service';
 
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'LL',
+    dateInput: 'LL'
   },
   display: {
     dateInput: 'LL',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
+    monthYearA11yLabel: 'MMMM YYYY'
+  }
 };
 
 @Component({
@@ -41,9 +44,9 @@ export const MY_FORMATS = {
       useClass: MomentDateAdapter,
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
-    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  ],
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ]
 })
 export class HotelInfoComponent implements OnInit {
   host: string = environment.BACK_END_URL;
@@ -80,7 +83,8 @@ export class HotelInfoComponent implements OnInit {
 
     this.filteredRooms = this.roomCtrl.valueChanges.pipe(
       startWith(null),
-      map((room: string | null) => room ? this._filter(room) : this.allRooms.slice()));
+      map((room: string | null) => (room ? this._filter(room) : this.allRooms.slice()))
+    );
   }
 
   ngOnInit() {
@@ -90,20 +94,22 @@ export class HotelInfoComponent implements OnInit {
   }
 
   getHotelData() {
-    this.hotelsService.getHotelById(this.hotelId).subscribe((res: HotelDataModel) => {
-      this.hotel = res.data;
+    this.hotelsService.getHotelById(this.hotelId).subscribe(
+      (res: HotelDataModel) => {
+        this.hotel = res.data;
 
-      this.hotel.hotelImages.map((hotelImage) => {
-        this.slides.push({image: `${this.host}/${hotelImage.imagePath}`})
-      })
+        this.hotel.hotelImages.map((hotelImage) => {
+          this.slides.push({ image: `${this.host}/${hotelImage.imagePath}` });
+        });
 
-      this.hotel.rooms.map((room) => {
-        this.allRooms.push(room.name)
-      })
-    },
+        this.hotel.rooms.map((room) => {
+          this.allRooms.push(room.name);
+        });
+      },
       () => {
         this.router.navigate(['/dashboard']);
-      });
+      }
+    );
   }
 
   getUser() {
@@ -138,17 +144,16 @@ export class HotelInfoComponent implements OnInit {
       price += selectedRoom.pricePerDay * diffDays; // change days number
 
       return selectedRoom.id;
-    })
-
+    });
 
     const order: OrderModel = {
       startTime: moment(startTime).utc().format(),
-      endTime:  moment(endTime).format(),
+      endTime: moment(endTime).format(),
       description: this.createOrderForm.get('description').value,
       hotelId: this.hotel.id,
       userId: this.user.id,
       price,
-      roomIds,
+      roomIds
     };
 
     const orderData = { data: order };
@@ -194,7 +199,6 @@ export class HotelInfoComponent implements OnInit {
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allRooms.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.allRooms.filter((fruit) => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 }
-

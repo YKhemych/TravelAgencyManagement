@@ -5,7 +5,7 @@ import { CompaniesService } from '../../core/services/company.service';
 import { HotelsService } from '../../core/services/hotel.service';
 import { HotelArrayDataModel, HotelModel } from '../../models/hotel.model';
 import { CompanyDataModel, CompanyModel } from '../../models/company.model';
-import { environment } from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +21,7 @@ export class CompanyComponent implements OnInit {
   public currentPage = 0;
   public totalSize = 100;
   public offset = 0;
-  public limit = this.pageSize
+  public limit = this.pageSize;
 
   constructor(
     private router: Router,
@@ -43,10 +43,12 @@ export class CompanyComponent implements OnInit {
   }
 
   getHotelsForUser() {
-    this.hotelsService.getHotelsForUser(this.limit, this.offset).subscribe((res: HotelArrayDataModel) => {
-      this.hotels = res.data;
-      this.totalSize = res.totalCount;
-    });
+    this.hotelsService
+      .getHotelsForUser(this.limit, this.offset)
+      .subscribe((res: HotelArrayDataModel) => {
+        this.hotels = res.data;
+        this.totalSize = res.totalCount;
+      });
   }
 
   public handlePage(e: any) {
@@ -60,5 +62,4 @@ export class CompanyComponent implements OnInit {
     this.offset = this.currentPage * this.pageSize;
     this.getHotelsForUser();
   }
-
 }

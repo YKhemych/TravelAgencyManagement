@@ -11,12 +11,12 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./modules/hotel/hotel.module').then((m) => m.HotelModule)
+    loadChildren: () => import('./modules/hotel/hotel.module').then((m) => m.HotelModule)
   },
   {
     path: 'order',
-    loadChildren: () => import('./modules/order/order-list/order-list.module').then((m) => m.OrderListModule),
+    loadChildren: () =>
+      import('./modules/order/order-list/order-list.module').then((m) => m.OrderListModule),
     canActivate: [AuthGuard]
   },
   {
@@ -35,17 +35,13 @@ const routes: Routes = [
   {
     path: 'createHotel',
     loadChildren: () =>
-      import('./modules/hotel/create-hotel/create-hotel.module').then(
-        (m) => m.CreateHotelModule
-      ),
+      import('./modules/hotel/create-hotel/create-hotel.module').then((m) => m.CreateHotelModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'hotel/:hotelId',
     loadChildren: () =>
-      import('./modules/hotel/hotel-info/hotel-info.module').then(
-        (m) => m.HotelInfoModule
-      ),
+      import('./modules/hotel/hotel-info/hotel-info.module').then((m) => m.HotelInfoModule),
     canActivate: []
   },
   {
