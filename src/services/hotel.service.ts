@@ -1,13 +1,17 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FindOptions, Sequelize } from 'sequelize';
 import { User } from '../models/user.model';
-import {InstanceAlreadyExist, InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError} from '../classes/errors.class';
+import {
+  InstanceAlreadyExist,
+  InstanceDoesNotExist,
+  YouDoNotHaveAccessToInstanceError
+} from '../classes/errors.class';
 import { AddressService } from './address.service';
 import { Company } from '../models/company.model';
 import { Address } from '../models/address.model';
 import { Location } from '../models/location.model';
 import { Hotel } from '../models/hotel.model';
-import {HotelArrayDataDto, HotelDto, HotelImageDto} from '../dto/hotel.dto';
+import { HotelArrayDataDto, HotelDto, HotelImageDto } from '../dto/hotel.dto';
 import { Room } from '../models/room.model';
 import { HotelImage } from '../models/hotelImage.model';
 import * as fs from 'fs';
@@ -23,7 +27,11 @@ export class HotelService {
     @Inject('SEQUELIZE') private readonly sequelize: Sequelize
   ) {}
 
-  async getHotelsForUser(userId: number, limit: number, offset: number): Promise<HotelArrayDataDto> {
+  async getHotelsForUser(
+    userId: number,
+    limit: number,
+    offset: number
+  ): Promise<HotelArrayDataDto> {
     // get user with company
     const user = await this.userModel.findByPk(userId);
 
@@ -48,7 +56,7 @@ export class HotelService {
 
     const count = await this.hotelModel.count({
       where: { companyId: user!.companyId }
-    })
+    });
 
     return {
       data: hotels,

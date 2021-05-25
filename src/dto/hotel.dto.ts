@@ -76,5 +76,8 @@ export class HotelArrayDataDto {
   @ValidateNested({ each: true })
   data: HotelDto[];
 
+  @ApiProperty({ example: 50 })
+  @IsNumber()
+  @IsOptional()
   totalCount?: number;
 }

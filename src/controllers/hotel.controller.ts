@@ -75,7 +75,7 @@ export class HotelController {
     @Query('limit') limit = config.DEFAULT_LIMIT,
     @Query('offset') offset = 0
   ): Promise<HotelArrayDataDto> {
-    return  this.hotelService.getHotels(limit, offset);
+    return this.hotelService.getHotels(limit, offset);
   }
 
   @Get('/user')
@@ -86,13 +86,12 @@ export class HotelController {
     description: 'Get hotels'
   })
   async getUser(
-      @UserId() userId: number,
-      @Query('limit') limit = config.DEFAULT_LIMIT,
-      @Query('offset') offset = 0
+    @UserId() userId: number,
+    @Query('limit') limit = config.DEFAULT_LIMIT,
+    @Query('offset') offset = 0
   ): Promise<HotelArrayDataDto> {
     try {
       return this.hotelService.getHotelsForUser(userId, limit, offset);
-
     } catch (err) {
       switch (err.constructor) {
         case InstanceDoesNotExist:
