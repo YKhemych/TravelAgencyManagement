@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { UserResponse } from "./user.dto";
+import { UserResponse } from './user.dto';
 
 export class HotelResponseDto {
   id: number;

@@ -13,7 +13,7 @@ export class HotelResponsesService {
     private api: ApiService
   ) {}
 
-  getAllHotelResponses(hotelId:number, limit: number = 1000, offset: number = 0) {
+  getAllHotelResponses(hotelId: number, limit: number = 1000, offset: number = 0) {
     return this.api.get(`/hotelResponse/${hotelId}?limit=${limit}&offset=${offset}`);
   }
 

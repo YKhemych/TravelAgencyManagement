@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../../core/services/alert/alert.service';
 import { HotelsService } from '../../../core/services/hotel.service';
@@ -9,10 +9,10 @@ import { UsersService } from '../../../core/services/users/users.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import {Observable, Subject} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { MatChipInputEvent } from '@angular/material/chips';
-import {map, startWith} from 'rxjs/operators';
-import {OrderArrayDataModel, OrderDataModel, OrderModel} from '../../../models/order.model';
+import { map, startWith } from 'rxjs/operators';
+import { OrderArrayDataModel, OrderDataModel, OrderModel } from '../../../models/order.model';
 import * as moment from 'moment';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import {
@@ -20,8 +20,11 @@ import {
   MomentDateAdapter
 } from '@angular/material-moment-adapter';
 import { OrdersService } from '../../../core/services/order.service';
-import {HotelResponseArrayDataModel, HotelResponseModel} from "../../../models/hotelResponse.model";
-import {HotelResponsesService} from "../../../core/services/hotelResponse.service";
+import {
+  HotelResponseArrayDataModel,
+  HotelResponseModel
+} from '../../../models/hotelResponse.model';
+import { HotelResponsesService } from '../../../core/services/hotelResponse.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -150,18 +153,20 @@ export class HotelInfoComponent implements OnInit {
 
       const userResponses = this.hotelResponses.filter((response) => {
         return response.userId === this.user.id;
-      })
+      });
 
-      if (executedOrders.length > userResponses.length && executedOrders.length !== 0 ) {
+      if (executedOrders.length > userResponses.length && executedOrders.length !== 0) {
         this.allowToLeaveResponse = true;
       }
     });
   }
 
   getHotelResponse() {
-    this.hotelResponsesService.getAllHotelResponses(this.hotelId).subscribe((res: HotelResponseArrayDataModel) => {
-      this.hotelResponses = res.data;
-    });
+    this.hotelResponsesService
+      .getAllHotelResponses(this.hotelId)
+      .subscribe((res: HotelResponseArrayDataModel) => {
+        this.hotelResponses = res.data;
+      });
   }
 
   createOrder() {

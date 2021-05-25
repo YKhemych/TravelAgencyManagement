@@ -5,11 +5,8 @@ import { Hotel } from '../models/hotel.model';
 import { Order } from '../models/order.model';
 import { Op } from 'sequelize';
 import { HotelResponse } from '../models/hotelResponse.model';
-import {
-  HotelResponseArrayDataDto,
-  HotelResponseDto
-} from '../dto/hotelResponse.dto';
-import { User } from "../models/user.model";
+import { HotelResponseArrayDataDto, HotelResponseDto } from '../dto/hotelResponse.dto';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class HotelResponseService {
@@ -57,16 +54,15 @@ export class HotelResponseService {
       );
 
       // get all hotelResponsess
-      const hotelResps = await this.hotelResponseModel.findAll(
-        {
-          where: { hotelId: hotel.id },
-          attributes: ['mark'],
-          transaction
-        }
-      );
+      const hotelResps = await this.hotelResponseModel.findAll({
+        where: { hotelId: hotel.id },
+        attributes: ['mark'],
+        transaction
+      });
 
       // count and save new rating
-      hotel.rating = hotelResps.reduce((rat: number, hotelRes) => rat + hotelRes.mark, 0) / hotelResps.length;
+      hotel.rating =
+        hotelResps.reduce((rat: number, hotelRes) => rat + hotelRes.mark, 0) / hotelResps.length;
       await hotel.save({ transaction });
 
       await transaction.commit();

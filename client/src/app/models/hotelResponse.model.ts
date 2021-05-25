@@ -1,4 +1,4 @@
-import {UserModel} from "./authentication.model";
+import { UserModel } from './authentication.model';
 
 export class HotelResponseModel {
   id?: number;
