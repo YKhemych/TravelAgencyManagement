@@ -4,10 +4,11 @@ import { Roles, User } from '../models/user.model';
 import { InstanceDoesNotExist } from '../classes/errors.class';
 import { Hotel } from '../models/hotel.model';
 import { Room } from '../models/room.model';
-import { OrderDto } from '../dto/order.dto';
+import { OrderArrayDataDto, OrderDto } from '../dto/order.dto';
 import { Order } from '../models/order.model';
 import { OrderRoom } from '../models/orderRoom.model';
 import { Op } from 'sequelize';
+import { omit } from 'lodash';
 
 @Injectable()
 export class OrderService {
@@ -79,15 +80,63 @@ export class OrderService {
     }
   }
 
-  async getOrders(userId: number, limit: number, offset: number): Promise<OrderDto[]> {
+  async updateOrder(orderDto: OrderDto, userId: number): Promise<OrderDto> {
+    const transaction = await this.sequelize.transaction();
+
+    try {
+      const order = await this.orderModel.findByPk(orderDto.id, {
+        where: {
+          userId
+        },
+        include: [
+          Room,
+          {
+            model: Hotel,
+            include: [Room]
+          }
+        ]
+      } as FindOptions);
+
+      if (!order) {
+        throw new InstanceDoesNotExist('Order');
+      }
+
+      // create order
+      await order.update(
+        {
+          ...omit(orderDto, [
+            'id',
+            'price',
+            'hotelId',
+            'userId',
+            'roomIds',
+            'createdAt',
+            'updatedAt'
+          ]),
+          deletedAt: orderDto.deletedAt ? new Date() : null
+        } as Order,
+        { transaction }
+      );
+
+      await transaction.commit();
+
+      return order;
+    } catch (err) {
+      await transaction.rollback();
+
+      throw err;
+    }
+  }
+
+  async getOrders(userId: number, limit: number, offset: number): Promise<OrderArrayDataDto> {
     // get user
     const user = await this.userModel.findByPk(userId);
 
-    let orders: Order[] = [];
+    let orders: { rows: Order[]; count: number };
 
     switch (user!.role) {
       case Roles.USER:
-        orders = await this.orderModel.findAll({
+        orders = await this.orderModel.findAndCountAll({
           where: {
             userId
           },
@@ -110,7 +159,7 @@ export class OrderService {
           })
           .then((hotels) => hotels.map((hotel) => hotel.id));
 
-        orders = await this.orderModel.findAll({
+        orders = await this.orderModel.findAndCountAll({
           where: {
             hotelId: { [Op.in]: hotelIds }
           },
@@ -121,7 +170,7 @@ export class OrderService {
         } as FindOptions);
         break;
       default:
-        orders = await this.orderModel.findAll({
+        orders = await this.orderModel.findAndCountAll({
           include: [Room, Hotel],
           order: [['createdAt', 'DESC']],
           limit: Number(limit),
@@ -129,16 +178,15 @@ export class OrderService {
         } as FindOptions);
     }
 
-    return orders;
+    return {
+      data: orders.rows,
+      totalCount: orders.count
+    };
   }
 
   async getOrder(id: number, userId: number): Promise<OrderDto> {
     // get user
     const user = await this.userModel.findByPk(userId);
-
-    console.log(id);
-
-    console.log(JSON.stringify(user, null, 2));
 
     let order: Order | null;
 
