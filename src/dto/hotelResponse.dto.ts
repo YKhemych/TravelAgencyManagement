@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { UserResponse } from "./user.dto";
 
 export class HotelResponseDto {
   id: number;
@@ -15,6 +16,12 @@ export class HotelResponseDto {
 
   @ApiProperty({ example: 21 })
   userId: number;
+
+  @ApiProperty({ type: UserResponse })
+  @Type(() => UserResponse)
+  @ValidateNested()
+  @IsOptional()
+  user?: UserResponse;
 
   @ApiProperty({ example: 11 })
   @IsNumber()

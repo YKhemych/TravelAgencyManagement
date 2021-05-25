@@ -1,20 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FindOptions, Sequelize } from 'sequelize';
-import { Roles, User } from '../models/user.model';
 import { InstanceDoesNotExist, YouDoNotHaveAccessToInstanceError } from '../classes/errors.class';
 import { Hotel } from '../models/hotel.model';
-import { Room } from '../models/room.model';
-import { OrderArrayDataDto, OrderDto } from '../dto/order.dto';
 import { Order } from '../models/order.model';
-import { OrderRoom } from '../models/orderRoom.model';
 import { Op } from 'sequelize';
-import { omit } from 'lodash';
 import { HotelResponse } from '../models/hotelResponse.model';
 import {
   HotelResponseArrayDataDto,
-  HotelResponseDataDto,
   HotelResponseDto
 } from '../dto/hotelResponse.dto';
+import { User } from "../models/user.model";
 
 @Injectable()
 export class HotelResponseService {
@@ -61,6 +56,19 @@ export class HotelResponseService {
         { transaction }
       );
 
+      // get all hotelResponsess
+      const hotelResps = await this.hotelResponseModel.findAll(
+        {
+          where: { hotelId: hotel.id },
+          attributes: ['mark'],
+          transaction
+        }
+      );
+
+      // count and save new rating
+      hotel.rating = hotelResps.reduce((rat: number, hotelRes) => rat + hotelRes.mark, 0) / hotelResps.length;
+      await hotel.save({ transaction });
+
       await transaction.commit();
 
       return hotelResponse;
@@ -81,9 +89,10 @@ export class HotelResponseService {
         hotelId,
         deletedAt: { [Op.eq]: null }
       },
+      include: [User],
       limit: Number(limit),
       offset: Number(offset)
-    });
+    } as FindOptions);
 
     return {
       data: response.rows,
