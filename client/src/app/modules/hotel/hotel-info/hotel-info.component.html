@@ -174,7 +174,7 @@
 
           </form>
 
-          <div class="pop-up-card-footer">
+          <div class="card-footer">
             <button mat-flat-button color="primary" [disabled]="createOrderForm.invalid" (click)="createOrder()">
               <span>Send</span>
             </button>
@@ -182,7 +182,64 @@
 
         </div>
       </mat-tab>
-      <mat-tab label="Відгуки"> Content 3 </mat-tab>
+      <mat-tab label="Відгуки">
+        <div class="card-content">
+          <div *ngFor="let hotelResponse of hotelResponses; let i = index" class="card-item-row">
+            <div class="card-field-row">
+              <div>
+                <span class="card-field">Ім'я: </span>
+                <span class="card-field">{{hotelResponse.user.name}} {{hotelResponse.user.surname[0]}}***</span>
+              </div>
+              <div>
+                <span class="card-field">Оцінка: </span>
+                <span class="card-field">{{hotelResponse.mark}}</span>
+              </div>
+            </div>
+            <div class="card-field-row">
+              <span class="card-field">Опис: </span>
+              <span class="card-field">{{hotelResponse.description}}</span>
+            </div>
+          </div>
+
+          <div class="card-item-row" *ngIf="allowToLeaveResponse">
+            <form [formGroup]="createHotelResponseForm">
+              <div class="field-row">
+                <mat-form-field class="full-width">
+                  <mat-label>
+                    <span class="required-marker">*</span>
+                    Оцінка
+                  </mat-label>
+                  <input matInput type="number" formControlName="mark" min="0" max="10" maxlength="2" placeholder="10" >
+                </mat-form-field>
+                <div *ngIf="isSubmitted && createHotelResponseForm.get('mark').hasError('required')" class="help-block"
+                     [ngClass]="{'error': createHotelResponseForm.get('mark').hasError('required')}">
+                  <span>Mark is required</span>
+                </div>
+              </div>
+              <div class="field-row">
+                <mat-form-field class="full-width">
+                  <mat-label>
+                    <span class="required-marker">*</span>
+                    Опис
+                  </mat-label>
+                  <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
+                <div *ngIf="isSubmitted && createHotelResponseForm.get('description').hasError('required')" class="help-block"
+                     [ngClass]="{'error': createHotelResponseForm.get('description').hasError('required')}">
+                  <span>Description is required</span>
+                </div>
+              </div>
+
+            </form>
+
+            <div class="card-footer">
+              <button mat-flat-button color="primary" [disabled]="createHotelResponseForm.invalid" (click)="createHotelResponse()">
+                <span>Send</span>
+              </button>
+            </div>
+          </div>
+          </div>
+      </mat-tab>
     </mat-tab-group>
 
 
