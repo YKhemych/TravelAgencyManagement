@@ -5,8 +5,8 @@ import { CompaniesService } from '../../../core/services/company.service';
 import { CompanyDto } from '../../../../../../src/dto/company.dto';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddressDto } from '../../../../../../src/dto/address.dto';
-import {HotelModel} from "../../../models/hotel.model";
-import {HotelsService} from "../../../core/services/hotel.service";
+import { HotelModel } from '../../../models/hotel.model';
+import { HotelsService } from '../../../core/services/hotel.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -45,10 +45,7 @@ export class CreateHotelComponent implements OnInit {
     this.isSubmitted = true;
     let location;
 
-    if (
-      this.createHotelForm.get('latitude').value &&
-      this.createHotelForm.get('latitude').value
-    ) {
+    if (this.createHotelForm.get('latitude').value && this.createHotelForm.get('latitude').value) {
       location = {
         latitude: this.createHotelForm.get('latitude').value,
         longitude: this.createHotelForm.get('latitude').value
@@ -80,13 +77,11 @@ export class CreateHotelComponent implements OnInit {
     this.hotelsService.createHotel(hotelData).subscribe(
       (result) => {
         if (result) {
-          this.hotelsService.createHotelImages(formData, result.data.id).subscribe(
-            (result) => {
-              if (result) {
-                this.router.navigate(['/company']);
-              }
+          this.hotelsService.createHotelImages(formData, result.data.id).subscribe((result) => {
+            if (result) {
+              this.router.navigate(['/company']);
             }
-          )
+          });
         }
       },
       (err) => {

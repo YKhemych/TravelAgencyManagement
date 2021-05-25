@@ -107,35 +107,83 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Замовлення"> Content 2 </mat-tab>
+      <mat-tab label="Замовлення">
+        <div class="card-content">
+          <form [formGroup]="createOrderForm">
+            <div class="field-row">
+              <mat-form-field class="full-width">
+                <mat-label>
+                  <span class="required-marker">*</span>
+                  Date range
+                </mat-label>
+                <mat-date-range-input [formGroup]="createOrderForm" [rangePicker]="picker">
+                  <input matStartDate placeholder="Start date" formControlName="startTime">
+                  <input matEndDate placeholder="End date" formControlName="endTime">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+
+                <mat-error *ngIf="createOrderForm.get('startTime').hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="createOrderForm.get('endTime').hasError('matEndDateInvalid')">Invalid end date</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="field-row">
+              <mat-form-field class="full-width">
+                <mat-label>
+                  <span class="required-marker">*</span>
+                  Rooms
+                </mat-label>
+                <mat-chip-list #chipList aria-label="Fruit selection">
+                  <mat-chip
+                    *ngFor="let room of rooms"
+                    [selectable]="true"
+                    [removable]="true"
+                    (removed)="remove(room)">
+                    {{room}}
+                    <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    #roomInput
+                    placeholder="Add room..."
+                    [formControl]="roomCtrl"
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                  <mat-option *ngFor="let room of filteredRooms | async" [value]="room">
+                    {{room}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="field-row">
+              <mat-form-field class="full-width">
+                <mat-label>
+                  <span class="required-marker">*</span>
+                  Description
+                </mat-label>
+                <textarea matInput formControlName="description"></textarea>
+              </mat-form-field>
+              <div *ngIf="isSubmitted && createOrderForm.get('description').hasError('required')" class="help-block"
+                   [ngClass]="{'error': createOrderForm.get('description').hasError('required')}">
+                <span>Description is required</span>
+              </div>
+            </div>
+
+          </form>
+
+          <div class="pop-up-card-footer">
+            <button mat-flat-button color="primary" [disabled]="createOrderForm.invalid" (click)="createOrder()">
+              <span>Send</span>
+            </button>
+          </div>
+
+        </div>
+      </mat-tab>
       <mat-tab label="Відгуки"> Content 3 </mat-tab>
     </mat-tab-group>
-<!--          <div class="company-card-content" *ngIf="!company">-->
-<!--            <div class="company-card-field-row pop-up-card-footer__double">-->
-<!--              <span class="company-card-field">Зараз не зареєстрована ніяка компанія</span>-->
-<!--              <button mat-button class="mat-focus-indicator user-name mat-button mat-button-base">-->
-<!--                <span class="pointer" routerLink="/createCompany">Зареєструвати компанію</span>-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </div>-->
-
-
-<!--    -->
-<!--          <div class="company-card-content" *ngIf="company">-->
-<!--            <div class="company-card-title-row">-->
-<!--              <span class="company-page-title">Інформація про компанію</span>-->
-<!--            </div>-->
-<!--            <span class="company-card-splitter"></span>-->
-
-<!--            <div class="company-card-field-row">-->
-<!--              <span class="company-card-field">Назва: </span>-->
-<!--              <span class="company-card-field">{{company.name}}</span>-->
-<!--            </div>-->
-<!--            <div class="company-card-field-row">-->
-<!--              <span class="company-card-field">Електронна адреса: </span>-->
-<!--              <span class="company-card-field">{{company.email}}</span>-->
-<!--            </div>-->
-
 
 
   </div>

@@ -1,0 +1,103 @@
+<div class="pop-up">
+  <div class="card">
+
+      <div *ngFor="let order of orders; let i = index" class="card-item-row">
+
+        <div class="card-field-row card-field-row-space-between">
+          <div>
+            <span class="card-field-title">Назва: </span>
+            <span class="card-field">{{order.hotel.name}}</span>
+          </div>
+          <div>
+            <span class="card-field-title">Ціна: </span>
+            <span class="card-field">{{order.price}}$</span>
+          </div>
+        </div>
+        <div class="card-field-row">
+          <span class="card-field-title">Дати: </span>
+          <span class="card-field">{{order.startTime}} - {{order.endTime}}</span>
+        </div>
+        <div class="card-field-row card-field-row-space-between">
+          <div>
+            <span class="card-field-title">Опис:</span>
+          </div>
+          <div>
+            <span class="card-field-title">Статус: </span>
+            <span class="card-field">{{getDescByStatus(order.status)}}</span>
+          </div>
+        </div>
+        <div class="card-field-row">
+          <span class="card-field">{{order.description}}</span>
+        </div>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Кімнати
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let room of order.rooms; let i = index">
+            <div class="card-field-row">
+              <div class="card-field-row-50-width">
+                <span class="card-field-title">Назва: </span>
+                <span class="card-field">{{room.name}}</span>
+              </div>
+              <div class="card-field-row-50-width">
+                <span class="card-field-title">Тип: </span>
+                <span class="card-field">{{room.roomType}}</span>
+              </div>
+            </div>
+            <div class="card-field-row">
+              <div class="card-field-row-50-width">
+                <span class="card-field-title">Місткість: </span>
+                <span class="card-field">{{room.roomCapacity}}</span>
+              </div>
+              <div class="card-field-row-50-width">
+                <span class="card-field-title">Ціна за день: </span>
+                <span class="card-field">{{room.pricePerDay}}$</span>
+              </div>
+            </div>
+            <div class="card-field-row">
+              <span class="card-field-title">Опис: </span>
+              <span class="card-field">{{room.description}}</span>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel *ngIf="user.companyId && user.role === 'owner'">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Змінити статус
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="card-field-row ">
+            <div class="card-field-row-50-width">
+              <mat-form-field>
+                <mat-label>Order status</mat-label>
+                <mat-select id="order{{order.id}}" [formControl]="actionControl">
+                  <mat-option *ngFor="let action of actions" [value]="action" disabled="{{getActionDisabled(order.status, action)}}">
+                    {{action.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="card-field-row-50-width">
+              <button mat-flat-button color="primary"  (click)="changeStatus(order.id)">
+                <span>Send</span>
+              </button>
+            </div>
+          </div>
+
+        </mat-expansion-panel>
+      </div>
+      <mat-paginator
+        [length]="totalSize"
+        [pageSize]="pageSize"
+        [pageIndex]="currentPage"
+        [pageSizeOptions]="[5, 10, 20, 40]"
+        (page)="handlePage($event)"
+        class="full-width" >
+      </mat-paginator>
+
+  </div>
+</div>

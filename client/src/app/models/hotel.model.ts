@@ -20,7 +20,7 @@ export class HotelModel {
   address: AddressModel;
   rooms?: RoomModel[];
   companyId?: number;
-  hotelImages?: HotelImageModel[]
+  hotelImages?: HotelImageModel[];
 }
 
 export class HotelDataModel {
