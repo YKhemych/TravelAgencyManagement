@@ -24,4 +24,8 @@ export class OrdersService {
   createOrder(data) {
     return this.api.post('/order', data);
   }
+
+  updateOrder(data) {
+    return this.api.put('/order', data);
+  }
 }

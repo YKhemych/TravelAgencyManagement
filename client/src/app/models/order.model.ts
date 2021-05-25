@@ -1,4 +1,5 @@
 import {RoomModel} from "./room.model";
+import {HotelModel} from "./hotel.model";
 
 export class OrderModel {
   id?: number;
@@ -9,7 +10,9 @@ export class OrderModel {
   isAccepted?: boolean;
   isExecuted?: boolean;
   isPaid?: boolean;
+  status?: string;
   hotelId: number;
+  hotel?: HotelModel;
   userId: number;
   roomIds?: number[];
   rooms?: RoomModel[];
@@ -24,4 +27,5 @@ export class OrderDataModel {
 
 export class OrderArrayDataModel {
   data: OrderModel[];
+  totalCount: number;
 }

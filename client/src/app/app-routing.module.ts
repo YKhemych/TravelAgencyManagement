@@ -15,6 +15,11 @@ const routes: Routes = [
       import('./modules/hotel/hotel.module').then((m) => m.HotelModule)
   },
   {
+    path: 'order',
+    loadChildren: () => import('./modules/order/order-list/order-list.module').then((m) => m.OrderListModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'company',
     loadChildren: () => import('./modules/company/company.module').then((m) => m.CompanyModule),
     canActivate: [AuthGuard]
