@@ -56,14 +56,14 @@
   }
 
   &-item-row {
-    margin-bottom: 10px;
-    padding-top: 10px;
-    border-top: 1px solid $black-color;
+    margin: 10px 0;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
   }
 
   &-field-row {
     display: flex;
-    margin: 10px 0;
+    margin: 15px 0;
 
     div {
       width: 50%;
@@ -76,5 +76,15 @@
     font-family: Arial;
     font-size: 16px;
     font-weight: 700;
+  }
+
+  &-footer {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 20px 50px 20px;
+
+    button {
+      //width: 100%;
+    }
   }
 }

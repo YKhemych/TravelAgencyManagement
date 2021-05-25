@@ -13,7 +13,7 @@ export class OrdersService {
     private api: ApiService
   ) {}
 
-  getAllOrders(limit: number, offset: number) {
+  getAllOrders(limit: number = 1000, offset: number = 0) {
     return this.api.get(`/order?limit=${limit}&offset=${offset}`);
   }
 

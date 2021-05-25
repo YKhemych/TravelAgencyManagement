@@ -12,6 +12,7 @@ import { Address } from './address.model';
 import { HotelImage } from './hotelImage.model';
 import { Company } from './company.model';
 import { Room } from './room.model';
+import { Order } from './order.model';
 
 @Table
 export class Hotel extends Model<Hotel> {
@@ -49,6 +50,9 @@ export class Hotel extends Model<Hotel> {
 
   @HasMany(() => Room)
   rooms: Room[];
+
+  @HasMany(() => Order)
+  orders: Order[];
 
   @CreatedAt
   createdAt: Date;

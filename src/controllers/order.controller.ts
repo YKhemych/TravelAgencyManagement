@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UseGuards
 } from '@nestjs/common';
@@ -48,6 +49,29 @@ export class OrderController {
     }
   }
 
+  @Put('')
+  @ApiCreatedResponse({
+    type: OrderDataDto,
+    description: 'Order successfully updated'
+  })
+  async updateOrder(
+    @Body() orderDataDto: OrderDataDto,
+    @UserId() userId: number
+  ): Promise<OrderDataDto> {
+    try {
+      const order = await this.orderService.updateOrder(orderDataDto.data, userId);
+
+      return { data: order };
+    } catch (err) {
+      switch (err.constructor) {
+        case InstanceDoesNotExist:
+          throw new BadRequestException(errorMessages.INSTANCE_DOES_NOT_EXIST);
+        default:
+          throw err;
+      }
+    }
+  }
+
   @Get('')
   @ApiImplicitQuery({ name: 'limit', required: false })
   @ApiImplicitQuery({ name: 'offset', required: false })
@@ -63,7 +87,7 @@ export class OrderController {
     try {
       const orders = await this.orderService.getOrders(userId, limit, offset);
 
-      return { data: orders };
+      return orders;
     } catch (err) {
       switch (err.constructor) {
         case InstanceDoesNotExist:

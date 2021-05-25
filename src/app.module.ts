@@ -8,6 +8,7 @@ import { CompanyModule } from './modules/company.module';
 import { HotelModule } from './modules/hotel.module';
 import { StaticModule } from './modules/serverStatic.module';
 import { OrderModule } from './modules/order.module';
+import { HotelResponseModule } from './modules/hotelResponse.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { OrderModule } from './modules/order.module';
     AuthModule,
     CompanyModule,
     HotelModule,
-    OrderModule
+    OrderModule,
+    HotelResponseModule
   ],
   controllers: [AppController],
   providers: [AppService]

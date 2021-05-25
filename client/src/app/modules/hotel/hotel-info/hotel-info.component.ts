@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../../core/services/alert/alert.service';
 import { HotelsService } from '../../../core/services/hotel.service';
@@ -7,13 +7,12 @@ import { HotelDataModel, HotelModel } from '../../../models/hotel.model';
 import { UserModel } from '../../../models/authentication.model';
 import { UsersService } from '../../../core/services/users/users.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AddressDto } from '../../../../../../src/dto/address.dto';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { map, startWith } from 'rxjs/operators';
-import { OrderModel } from '../../../models/order.model';
+import { OrderArrayDataModel, OrderDataModel, OrderModel } from '../../../models/order.model';
 import * as moment from 'moment';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import {
@@ -21,6 +20,11 @@ import {
   MomentDateAdapter
 } from '@angular/material-moment-adapter';
 import { OrdersService } from '../../../core/services/order.service';
+import {
+  HotelResponseArrayDataModel,
+  HotelResponseModel
+} from '../../../models/hotelResponse.model';
+import { HotelResponsesService } from '../../../core/services/hotelResponse.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -51,7 +55,9 @@ export const MY_FORMATS = {
 export class HotelInfoComponent implements OnInit {
   host: string = environment.BACK_END_URL;
   hotel: HotelModel;
+  hotelResponses: HotelResponseModel[];
   user: UserModel;
+  userOrders: OrderModel[];
   slides = [];
   hotelId: number;
   rooms: string[] = [];
@@ -65,6 +71,11 @@ export class HotelInfoComponent implements OnInit {
   @ViewChild('roomInput') roomInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
+  public createHotelResponseForm: FormGroup;
+  public isSubmittedHotelResp: boolean = false;
+
+  public allowToLeaveResponse: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -72,6 +83,7 @@ export class HotelInfoComponent implements OnInit {
     private alertService: AlertService,
     private usersService: UsersService,
     private hotelsService: HotelsService,
+    private hotelResponsesService: HotelResponsesService,
     private ordersService: OrdersService
   ) {
     this.createOrderForm = this.formBuilder.group({
@@ -81,16 +93,29 @@ export class HotelInfoComponent implements OnInit {
       description: new FormControl('', [Validators.required])
     });
 
+    this.createHotelResponseForm = this.formBuilder.group({
+      mark: new FormControl('', [Validators.required, Validators.max(10), Validators.min(0)]),
+      description: new FormControl('', [Validators.required])
+    });
+
     this.filteredRooms = this.roomCtrl.valueChanges.pipe(
       startWith(null),
       map((room: string | null) => (room ? this._filter(room) : this.allRooms.slice()))
     );
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.hotelId = Number(this.route.snapshot.paramMap.get('hotelId'));
+    await this.getHotelData();
+    await this.getUser();
+    await this.getHotelResponse();
+    await this.getUserOrdersAndCount();
+  }
+
+  refreshData() {
     this.getHotelData();
-    this.getUser();
+    this.getHotelResponse();
+    this.getUserOrdersAndCount();
   }
 
   getHotelData() {
@@ -98,8 +123,8 @@ export class HotelInfoComponent implements OnInit {
       (res: HotelDataModel) => {
         this.hotel = res.data;
 
-        this.hotel.hotelImages.map((hotelImage) => {
-          this.slides.push({ image: `${this.host}/${hotelImage.imagePath}` });
+        this.slides = this.hotel.hotelImages.map((hotelImage) => {
+          return { image: `${this.host}/${hotelImage.imagePath}` };
         });
 
         this.hotel.rooms.map((room) => {
@@ -116,6 +141,32 @@ export class HotelInfoComponent implements OnInit {
     this.usersService.getCurrentUser().subscribe((res: UserModel) => {
       this.user = res;
     });
+  }
+
+  getUserOrdersAndCount() {
+    this.ordersService.getAllOrders().subscribe((res: OrderArrayDataModel) => {
+      this.userOrders = res.data;
+
+      const executedOrders = this.userOrders.filter((userOrder) => {
+        return userOrder.isExecuted && userOrder.userId === this.user.id;
+      });
+
+      const userResponses = this.hotelResponses.filter((response) => {
+        return response.userId === this.user.id;
+      });
+
+      if (executedOrders.length > userResponses.length && executedOrders.length !== 0) {
+        this.allowToLeaveResponse = true;
+      }
+    });
+  }
+
+  getHotelResponse() {
+    this.hotelResponsesService
+      .getAllHotelResponses(this.hotelId)
+      .subscribe((res: HotelResponseArrayDataModel) => {
+        this.hotelResponses = res.data;
+      });
   }
 
   createOrder() {
@@ -162,6 +213,31 @@ export class HotelInfoComponent implements OnInit {
       (result) => {
         if (result) {
           this.router.navigate(['/order']);
+        }
+      },
+      (err) => {
+        this.alertService.openErrorModal('error', err.error.message);
+        this.isSubmitted = false;
+      }
+    );
+  }
+
+  createHotelResponse() {
+    this.isSubmittedHotelResp = false;
+
+    const hotelResponse: HotelResponseModel = {
+      mark: this.createHotelResponseForm.get('mark').value,
+      description: this.createHotelResponseForm.get('description').value,
+      hotelId: this.hotel.id,
+      userId: this.user.id
+    };
+
+    this.hotelResponsesService.createHotelResponse({ data: hotelResponse }).subscribe(
+      (result) => {
+        if (result) {
+          this.allowToLeaveResponse = false;
+
+          this.refreshData();
         }
       },
       (err) => {
